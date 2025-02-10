@@ -1,0 +1,404 @@
+---
+description: Comprehensive PRD 
+globs: 
+---
+import React from "react";
+
+const PRDPart1 = () => (
+  <pre style={{ whiteSpace: "pre-wrap" }}>
+{`# EverythingBagelAI – Comprehensive Product Requirements Document (PRD) — Part 1
+
+---
+
+## 1. Overview and Objectives
+
+### 1.1. Purpose
+EverythingBagelAI is an integrated AI platform that combines two core functions:
+- **Directory:** A curated catalog of AI applications and automation workflows with detailed profiles including ratings, pricing, alternatives, and enrichment data.
+- **Chat Interface:** Multiple, context-specific chat pages where users interact with an intelligent AI agent. This agent is powered by a Retrieval-Augmented Generation (RAG) system (via n8n) that leverages a Supabase-based vector store containing documentation, common prompts, and subject-relevant details.
+
+### 1.2. Key Objectives
+- **Comprehensive Directory:** Enable users to search, filter, and explore detailed profiles of AI applications and automation workflows.
+- **Contextual Assistance:** Provide specialized chat experiences (for coding, automation, PRD creation, and AI applications) with full conversation history tracking.
+- **Data Enrichment Integration:** Prepare the database to receive enriched data from external sources via n8n. n8n workflows will scrape and process data externally (e.g., from YouTube and Reddit) and push that data into Supabase via dedicated endpoints.
+- **Seamless Integration:** Use Supabase (PostgreSQL) as the central database with real-time subscriptions, auto-generated REST/GraphQL APIs, and secure client libraries. Integrate with n8n through secure webhooks for advanced automation tasks.
+- **Robust History Tracking:** Log user interactions, chat sessions, and automation execution details for analytics, debugging, and performance optimization.
+- **Scalability & Security:** Ensure a robust, secure, and maintainable system built using best practices.
+
+---
+
+## 2. Functional Requirements and Features
+
+### 2.1. Directory Functionality
+- **Search & Filter:**  
+  - Enable full-text search and filtering by main category and generalized subcategory.
+  - Listing pages display a responsive grid of cards for both AI applications and automations.
+- **Detail Pages:**  
+  - **AI Application Detail:**  
+    - **Header:** Displays logo, name, social links, category/subcategory badges, ranking, individual ratings (pricing, functionality, accessibility), type (Free, Premium, Paid), website link, and affiliate code.
+    - **Content:** Includes an in-depth overview with key features, detailed pricing (with breakdowns), and alternative recommendations.
+    - **Enrichment:** Displays data from n8n workflows (e.g., Reddit sentiment, YouTube insights).
+  - **Automation Detail:**  
+    - **Header:** Shows automation name, creator, and category/subcategory tags.
+    - **Content:** Provides a detailed functionality description, an embedded video demonstration, and an interactive, step-by-step recipe.
+    - **Enrichment:** Displays additional insights (e.g., YouTube transcript data) from n8n.
+
+### 2.2. Chat Interface and Agent Integration
+- **Chat Landing Page:**  
+  - Displays a grid of cards for different chat contexts (Coding, Automation, PRD, AI Apps) with icons, titles, and descriptions.
+  - Includes sections explaining “How It Works” and key benefits.
+- **Specific Chat Pages:**  
+  - Each chat page features a streaming interface with a header indicating context, message history, an input field, and context selection options.
+  - Each session is uniquely identified and all messages and context data are logged.
+- **AI Agent:**  
+  - Utilizes a RAG system (via n8n) pulling from a Supabase-based vector store containing documentation and common prompts.
+  - Receives updated contextual data through a dedicated webhook endpoint.
+
+### 2.3. Automation Workflows
+- **Application Data Generation Automation:**  
+  - Scans the database of AI applications and generates enriched profiles, populating fields such as logo, name, social links, type, website link, affiliate code, summary, key features, pricing details, and pricing breakdown.
+- **Subcategory Assignment Automation:**  
+  - Automatically assigns a generalized subcategory based on enriched profile data.
+- **Alternative Suggestions Automation:**  
+  - Matches applications based on subcategory and feature data to generate alternative recommendations.
+- **Ratings Automation:**  
+  - Aggregates and updates individual ratings (pricing, functionality, accessibility) for each application.
+- **Reddit Scraping Automation:**  
+  - n8n workflows scrape Reddit discussions related to applications, process sentiment, and push data via a dedicated webhook.
+- **YouTube Scraping Automation:**  
+  - n8n workflows scrape and transcribe YouTube videos related to automation workflows, extract key details, and push the processed data via a dedicated webhook.
+
+---
+
+## 3. Vercel Deployment Considerations
+
+### 3.1. Deployment Environment
+- **Platform:** Deploy EverythingBagelAI on Vercel.
+- **Build Process:**  
+  - Leverage Next.js 13+ with the App Router for SSR/SSG.
+  - Ensure the build command (`next build`) executes without errors.
+- **Environment Variables:**  
+  - Configure `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, and secure keys (e.g., `SUPABASE_SERVICE_ROLE_KEY`, n8n API keys) in Vercel.
+- **CI/CD Integration:**  
+  - Utilize Vercel’s automatic deployments from the Git repository.
+  - Set up distinct staging and production environments via Vercel's preview deployments.
+- **Performance Monitoring:**  
+  - Use Vercel Analytics and external monitoring tools (e.g., Sentry) to monitor build times, traffic, and errors.
+- **Real-Time Considerations:**  
+  - Ensure that Supabase real-time subscriptions function reliably within Vercel’s serverless environment.
+
+*Note: Include this section only once to avoid duplication.*
+
+---
+
+## 4. Detailed UI/UX Descriptions
+
+### 4.1. Global Navigation & Layout
+- **Main Navigation Bar (MainNav):**
+  - Present on all pages with links to Home, Chat, and Directory.
+  - Contains a search input and adapts responsively.
+  - Highlights the active section and logs navigation events.
+- **Sidebar:**
+  - Provides context-specific navigation: chat types and history in Chat; category filters and quick links in Directory.
+  - Is collapsible to optimize screen space.
+- **Shell Component:**
+  - Wraps all pages to ensure consistent layout and theming.
+
+---
+
+## 5. Database Schema and Configuration (Supabase)
+
+### 5.1. Platform and Integration
+- **Platform:** Supabase (Managed PostgreSQL)
+- **Integration:**
+  - Accessible via Supabase’s RESTful/GraphQL APIs.
+  - Real-time subscriptions for dynamic UI updates.
+  - Secure client libraries in Next.js for efficient data access.
+
+### 5.2. Schema Details
+
+#### Table: `applications`
+- **Purpose:** Stores detailed profiles for AI applications.
+- **Columns:**
+  - `id` (UUID, Primary Key, NOT NULL, default generated)
+  - `name` (Text, NOT NULL)
+  - `logo_url` (Text)
+  - **Social Links:** `twitter_url`, `linkedin_url`, `facebook_url`, `github_url` (Text)
+  - `category_id` (UUID, NOT NULL, FK → categories.id)
+  - `sub_category_id` (UUID, NOT NULL, FK → sub_categories.id)
+  - `ranking` (Integer)
+  - **Ratings:** `pricing_rating`, `functionality_rating`, `accessibility_rating` (Integer, CHECK constraints 1-5)
+  - `type` (Text, NOT NULL) — Accepts values such as "Free", "Premium", "Paid"
+  - `website_url` (Text)
+  - `affiliate_code` (Text)
+  - `summary` (Text)
+  - `key_features` (Text[]) — Array of key features
+  - `pricing_details` (Text)
+  - `pricing_breakdown` (JSONB)
+  - `alternatives` (UUID[]) — Array of alternative application IDs
+  - **Enrichment Fields:**  
+    - `reddit_sentiment` (JSONB)
+    - `youtube_insights` (JSONB)
+  - `created_at` (Timestamp, default now())
+- **Indexes:**  
+  - Index on `category_id`, `sub_category_id`, `created_at`
+  - Full-text search index on `name`, `summary`, and `key_features`
+
+#### Table: `automations`
+- **Purpose:** Stores automation workflow records.
+- **Columns:**
+  - `id` (UUID, Primary Key, NOT NULL)
+  - `name` (Text, NOT NULL)
+  - `creator` (Text)
+  - `category_id` (UUID, NOT NULL, FK → categories.id)
+  - `sub_category_id` (UUID, NOT NULL, FK → sub_categories.id)
+  - `applications_utilized` (UUID[]) — References to application IDs
+  - `functionality` (Text)
+  - `video_link` (Text)
+  - `recipe` (Text)
+  - **Enrichment Field:** `youtube_transcript` (Text)
+  - `created_at` (Timestamp, default now())
+- **Indexes:**  
+  - Index on `category_id`, `sub_category_id`, `created_at`
+
+#### Table: `categories`
+- **Purpose:** Stores main categories.
+- **Columns:**
+  - `id` (UUID, Primary Key, NOT NULL)
+  - `name` (Text, NOT NULL, UNIQUE)
+  - `description` (Text)
+  - `created_at` (Timestamp, default now())
+- **Indexes:**  
+  - Unique index on `name`
+
+#### Table: `sub_categories`
+- **Purpose:** Stores subcategories linked to main categories.
+- **Columns:**
+  - `id` (UUID, Primary Key, NOT NULL)
+  - `name` (Text, NOT NULL)
+  - `category_id` (UUID, NOT NULL, FK → categories.id)
+  - `description` (Text)
+  - `created_at` (Timestamp, default now())
+- **Indexes:**  
+  - Index on `category_id`
+
+#### Table: `reviews`
+- **Purpose:** Stores user reviews for applications.
+- **Columns:**
+  - `id` (UUID, Primary Key, NOT NULL)
+  - `application_id` (UUID, NOT NULL, FK → applications.id)
+  - `user_id` (UUID)
+  - `pricing_rating` (Integer, CHECK between 1 and 5)
+  - `functionality_rating` (Integer, CHECK between 1 and 5)
+  - `accessibility_rating` (Integer, CHECK between 1 and 5)
+  - `comment` (Text)
+  - `created_at` (Timestamp, default now())
+
+#### Table: `vector_documents`
+- **Purpose:** Stores documents, prompts, and contextual data for the AI agent.
+- **Columns:**
+  - `id` (UUID, Primary Key)
+  - `title` (Text, NOT NULL)
+  - `content` (Text)
+  - `metadata` (JSONB)
+  - `type` (Text) — e.g., "Next.js Documentation", "Common Prompt"
+  - `created_at` (Timestamp, default now())
+
+#### Table: `chat_logs`
+- **Purpose:** Logs all conversations between users and the AI agent.
+- **Columns:**
+  - `id` (UUID, Primary Key)
+  - `user_id` (UUID)
+  - `session_id` (Text)
+  - `message` (Text)
+  - `agent_response` (Text)
+  - `context` (JSONB)
+  - `created_at` (Timestamp, default now())
+
+#### Table: `scraped_data`
+- **Purpose:** Stores raw and processed data from scraping operations via n8n.
+- **Columns:**
+  - `id` (UUID, Primary Key)
+  - `source` (Text) — e.g., "Reddit", "YouTube"
+  - `content` (Text)
+  - `sentiment` (JSONB)
+  - `related_application_id` (UUID, FK → applications.id)
+  - `related_automation_id` (UUID, FK → automations.id)
+  - `metadata` (JSONB)
+  - `created_at` (Timestamp, default now())
+
+`}
+  </pre>
+);
+
+export default PRDPart1;
+
+import React from "react";
+
+const PRDPart2 = () => (
+  <pre style={{ whiteSpace: "pre-wrap" }}>
+{`## 6. API Endpoints and Calling Conventions
+
+### 6.1. Overview
+The API layer is built atop Supabase’s auto-generated endpoints and custom Next.js API routes. Endpoints support CRUD operations, data ingestion via webhooks, and real-time subscriptions.
+
+### 6.2. Applications Endpoints
+- **GET /api/applications:**  
+  Retrieves a paginated list of applications.
+  - **Query Parameters:** `search`, `category`, `sub_category`, `cursor`, `limit`
+  - **Response:** JSON with a `data` array and `pagination` metadata.
+- **GET /api/applications/{id}:**  
+  Retrieves detailed information for a single application.
+- **POST /api/applications:**  
+  Creates a new application record (admin authentication required).
+- **PUT /api/applications/{id} & DELETE /api/applications/{id}:**  
+  Update and delete operations for an application.
+
+### 6.3. Automations Endpoints
+- **GET /api/automations:**  
+  Retrieves a paginated list of automation workflows.
+- **GET /api/automations/{id}:**  
+  Retrieves detailed information for a single automation.
+- **POST /api/automations, PUT /api/automations/{id}, DELETE /api/automations/{id}:**  
+  Standard CRUD operations for automations.
+
+### 6.4. Automation-Specific Endpoints (Webhooks)
+- **POST /api/automations/application-data-gen:**  
+  Triggers the Application Data Generation Automation.
+- **POST /api/automations/subcategory:**  
+  Executes the subcategory assignment automation.
+- **POST /api/automations/alternative:**  
+  Generates alternative application suggestions.
+- **POST /api/automations/ratings:**  
+  Recalculates and updates application ratings.
+- **POST /api/webhooks/reddit-scrape:**  
+  Receives data from n8n (from Reddit scraping) to update `reddit_sentiment` and log details in `scraped_data`.
+- **POST /api/webhooks/youtube-scrape:**  
+  Receives data from n8n (from YouTube scraping/transcription) to update `youtube_insights` (applications) or `youtube_transcript` (automations) and log details.
+- **POST /api/webhooks/n8n:**  
+  A general endpoint to receive data from n8n workflows (updates `vector_documents`, `chat_logs`, etc.).
+
+### 6.5. Cursor Rules and Pagination
+- **Cursor Parameters:**  
+  - `cursor`: A token (e.g., last record’s `created_at` or primary key) indicating the starting point for the next page.
+  - `limit`: Number of items per page (default: 20).
+- **Implementation:**  
+  - Use the cursor value in the WHERE clause and order by a stable field (ASC for ascending, DESC for descending).
+- **Response Metadata:**  
+  Return a pagination object:
+  {
+    "cursor": "next_cursor_token",
+    "limit": 20,
+    "hasMore": true
+  }
+- **Error Handling:**  
+  - Validate cursor tokens; return 400 errors if invalid.
+  - Set `hasMore` to false when no additional data exists.
+
+### 6.6. Real-Time Integration
+- **Subscriptions:**  
+  The frontend subscribes to updates on key tables (e.g., `applications`, `chat_logs`) using Supabase’s real-time API.
+- **API Client Example:**
+  \`\`\`javascript
+  import { createClient } from '@supabase/supabase-js';
+  const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+  \`\`\`
+- **Error Handling:**  
+  Implement reconnection logic and error notifications.
+
+---
+
+## 7. Webhook and API Integration with n8n
+
+### 7.1. Webhook Endpoints
+- **Security:**  
+  All webhook endpoints require API keys or JWT tokens for validation.
+- **Endpoints:**
+  - **POST /api/webhooks/n8n:** Receives updates for the vector store and chat logs.
+  - **POST /api/webhooks/reddit-scrape:** Processes data from n8n (originating from Reddit scraping) to update \`reddit_sentiment\` and log details in \`scraped_data\`.
+  - **POST /api/webhooks/youtube-scrape:** Processes data from n8n (originating from YouTube scraping/transcription) to update \`youtube_insights\` (applications) or \`youtube_transcript\` (automations), and logs details.
+
+### 7.2. Data Ingestion Flow
+- External n8n workflows trigger these endpoints to:
+  - Update \`vector_documents\` for contextual data.
+  - Insert new records into \`scraped_data\`.
+  - Update enrichment fields in \`applications\` and \`automations\`.
+
+---
+
+## 8. History Tracking and Audit Logging
+
+### 8.1. Chat History Tracking
+- Each chat session is assigned a unique session ID.
+- All messages (user inputs and AI responses) are logged in the \`chat_logs\` table with timestamps and contextual metadata.
+- This logging supports conversation reconstruction, performance analytics, and debugging.
+
+### 8.2. Directory Interaction Logging
+- Log user interactions such as filter selections, search queries, card clicks, and navigation events.
+- Store these logs in dedicated analytics tables or integrate with external monitoring tools.
+
+### 8.3. Automation and Scraping Audit
+- Every automation execution logs:
+  - Execution timestamp, number of records updated, data source (as provided by n8n), and any encountered errors.
+- Updates to \`vector_documents\` and \`scraped_data\` are timestamped and logged for traceability.
+
+---
+
+## 9. Developer Guidelines and Best Practices
+
+### 9.1. Naming Conventions and Code Standards
+- **Database:** Use snake_case for table and column names; plural for tables and singular for columns.
+- **Files:** Maintain consistent, descriptive names (e.g., ApplicationCard.tsx, main-nav.tsx).
+- **API Endpoints:** Use kebab-case for endpoint URLs.
+- **Documentation:** Provide comprehensive inline comments and maintain up-to-date API and migration documentation.
+
+### 9.2. Testing, CI/CD, and Deployment
+- Deploy all changes to a staging environment for thorough testing.
+- Write unit tests for components and integration tests for API endpoints.
+- Integrate schema migrations and API tests into the CI/CD pipeline.
+- Schedule regular backups and document recovery procedures.
+
+### 9.3. Security and Performance
+- Use Supabase’s Row-Level Security (RLS) and role-based access control (RBAC) to protect sensitive data.
+- Validate and sanitize all inputs, especially for webhook endpoints.
+- Optimize performance using indexing, caching, and connection pooling.
+- Monitor logs and performance metrics using Supabase dashboards and external tools (e.g., Sentry).
+
+### 9.4. Cursor Rules
+- Implement robust cursor-based pagination in:
+  - PostgreSQL queries (refer to `cursor-rules-sql.md`)
+  - Supabase API requests (refer to `cursor-rules-supabase-api.md`)
+  - Next.js data fetching methods (refer to `cursor-rules-nextjs.md`)
+  - React components for directory listings (refer to `cursor-rules-react-components.md`)
+  - n8n workflows for external API interactions (refer to `cursor-rules-n8n.md`)
+
+---
+
+## 10. Deliverable Summary
+
+This comprehensive PRD for EverythingBagelAI details:
+- **Overall Functionality:**  
+  A unified platform combining an AI applications/automations directory with a multi-context chat interface driven by a RAG system via n8n.
+- **UI/UX:**  
+  Detailed page layouts and interactions for Home, Chat Landing, specific Chat pages, Directory Landing, AI Applications Directory, Application Detail, Automations Directory, and Automation Detail pages; with persistent global navigation (MainNav, Sidebar, Shell) and detailed history tracking.
+- **Database Schema and Configuration:**  
+  In-depth schema definitions for core tables (applications, automations, categories, sub_categories, reviews, vector_documents, chat_logs, scraped_data) including indexing and constraints.
+- **API Endpoints and Webhook Integration:**  
+  Full specifications for CRUD operations, custom webhook endpoints for n8n integration, and real-time subscription mechanisms.
+- **File Structure and Code Organization:**  
+  A detailed breakdown of the Next.js project structure, including pages, components, API routes, utilities, and migration scripts.
+- **History Tracking:**  
+  Comprehensive logging of chat sessions, directory interactions, and automation events for analytics, debugging, and performance monitoring.
+- **Vercel Deployment Considerations:**  
+  Specific deployment instructions for Vercel, including environment variable configuration, CI/CD integration, build process, and real-time considerations.
+- **Developer Guidelines:**  
+  Best practices for naming conventions, testing, deployment, security, performance, and cursor-based pagination.
+
+Happy building—may EverythingBagelAI set a new standard in AI-powered platforms by seamlessly integrating intelligent chat assistance, a comprehensive directory, and automated data enrichment into one robust, scalable system!
+`}
+  </pre>
+);
+
+export default PRDPart2;
+
+

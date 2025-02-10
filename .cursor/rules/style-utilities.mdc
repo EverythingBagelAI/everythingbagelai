@@ -1,0 +1,164 @@
+---
+description: Guidelines for Global Styles, Component-Specific Styling, and Utility Libraries Integration
+globs: .tsx
+---
+/**
+ * Title: stylesutilities
+ * Description: Guidelines for Global Styles, Component-Specific Styling, and Utility Libraries Integration
+ *
+ * # Styles and Utilities Integration Guide
+ *
+ * ## General Guidelines
+ *
+ * - **Consistency:** Maintain a consistent styling and utility structure across the project to ensure ease of maintenance and scalability.
+ * - **Modularity:** Keep styles modular by separating global styles from component-specific styles, and utilities should be isolated for reuse.
+ * - **Documentation:** Provide clear, concise documentation for styling decisions and utility functions to facilitate team collaboration.
+ * - **Integration:** Leverage Tailwind CSS integrated with Magic UI design tokens for a cohesive design language across the application.
+ * - **Security & Performance:** Securely initialize client libraries (e.g., Supabase) and optimize utility functions for efficient API calls, data formatting, and error handling.
+ *
+ * ## Global Styling with Tailwind CSS
+ *
+ * ### /styles/globals.css
+ *
+ * - **Purpose:** Establish global styles that set the foundational design for the application.
+ * - **Tailwind Integration:** Use Tailwind CSS along with Magic UI design tokens to ensure consistency in spacing, typography, colors, and other design elements.
+ * - **Best Practices:**
+ *   - Keep the file organized with comments and sections (e.g., typography, layout, components).
+ *   - Avoid over-specificity to allow for easy overrides in component-specific styles.
+ *   - Utilize Tailwind’s utility classes for rapid prototyping and maintainability.
+ *
+ * #### Example Structure:
+ *
+ * ```css
+ * /* globals.css *
+ * 
+ * /* Import Magic UI Design Tokens */
+ * @import 'magic-ui-tokens';
+ *
+ * /* Base styles */
+ * html,
+ * body {
+ *   @apply font-sans text-base text-gray-900;
+ *   background-color: var(--background-color);
+ * }
+ *
+ * /* Layout utilities */
+ * .container {
+ *   @apply mx-auto px-4;
+ * }
+ *
+ * /* Typography */
+ * h1, h2, h3, h4, h5, h6 {
+ *   @apply font-bold;
+ * }
+ *
+ * /* Additional global styles... */
+ * ```
+ *
+ * ## Component-Specific Styling
+ *
+ * ### /styles/[component].module.css
+ *
+ * - **Purpose:** Provide isolated and reusable styling for individual components.
+ * - **Naming Conventions:** Use clear, descriptive names that correlate with the component's purpose (e.g., `header.module.css`, `button.module.css`).
+ * - **Scoped Styling:** Leverage CSS modules to avoid class name collisions and maintain encapsulation.
+ * - **Best Practices:**
+ *   - Keep the styles minimal and focused on the component.
+ *   - Use BEM or similar naming conventions if additional clarity is needed.
+ *   - Integrate Tailwind’s utility classes within the module when necessary.
+ *
+ * #### Example Structure:
+ *
+ * ```css
+ * /* button.module.css *
+ * .button {
+ *   @apply bg-blue-500 text-white py-2 px-4 rounded;
+ *   transition: background-color 0.3s ease;
+ * }
+ *
+ * .button:hover {
+ *   @apply bg-blue-600;
+ * }
+ * ```
+ *
+ * ## Supabase Client Initialization
+ *
+ * ### /lib/supabaseClient.ts
+ *
+ * - **Purpose:** Securely initialize and configure the Supabase client for use across the application.
+ * - **Security:** Store sensitive configuration details (e.g., API keys) securely using environment variables.
+ * - **Best Practices:**
+ *   - Initialize the Supabase client once and export it for reuse.
+ *   - Implement error handling to manage connection issues.
+ *   - Keep the client configuration isolated from business logic.
+ *
+ * #### Example Initialization:
+ *
+ * ```ts
+ * // supabaseClient.ts
+ * import { createClient } from '@supabase/supabase-js';
+ *
+ * const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+ * const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+ *
+ * if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+ *   throw new Error('Missing Supabase configuration');
+ * }
+ *
+ * export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+ * ```
+ *
+ * ## Utility Functions
+ *
+ * ### /lib/utils.ts
+ *
+ * - **Purpose:** Provide modular, well-documented utility functions for API calls, data formatting, and error handling.
+ * - **Modularity:** Separate utilities into distinct functions for easier testing and reuse.
+ * - **Documentation:** Comment each utility function to describe its purpose, parameters, and return values.
+ * - **Best Practices:**
+ *   - Ensure that utility functions are pure where possible.
+ *   - Incorporate robust error handling to manage exceptions gracefully.
+ *   - Organize utilities by category if the file grows large, or split into multiple files as needed.
+ *
+ * #### Example Utility Functions:
+ *
+ * ```ts
+ * // utils.ts
+ *
+ * /**
+ *  * Makes an API call and returns the parsed JSON response.
+ *  * @param url - The endpoint URL.
+ *  * @param options - Fetch options.
+ *  * @returns The JSON data or throws an error.
+ *  *\/
+ * export async function fetchData(url: string, options = {}) {
+ *   const response = await fetch(url, options);
+ *   if (!response.ok) {
+ *     throw new Error(`HTTP error! status: ${response.status}`);
+ *   }
+ *   return response.json();
+ * }
+ *
+ * /**
+ *  * Formats a date string into a human-readable format.
+ *  * @param dateStr - The date string in ISO format.
+ *  * @returns A formatted date string.
+ *  *\/
+ * export function formatDate(dateStr: string): string {
+ *   const date = new Date(dateStr);
+ *   return date.toLocaleDateString();
+ * }
+ *
+ * /**
+ *  * Handles errors by logging and rethrowing.
+ *  * @param error - The error object.
+ *  *\/
+ * export function handleError(error: any): void {
+ *   console.error('An error occurred:', error);
+ *   throw error;
+ * }
+ * ```
+ */
+ 
+ // This file contains guidelines and code examples for Global Styles, Component-Specific Styling, and Utility Libraries Integration.
+

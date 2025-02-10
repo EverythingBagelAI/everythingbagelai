@@ -1,0 +1,114 @@
+---
+description: Guidelines for API Endpoints & RESTful Best Practices Guide
+globs: .ts
+---
+/**
+ * Title: apiendpoints
+ * Description: Guidelines for API Endpoints & RESTful Best Practices Guide
+ *
+ * # API Endpoints & RESTful Best Practices Guide
+ *
+ * ## General Guidelines
+ *
+ * - Adhere to RESTful API design principles to ensure consistency and predictability across endpoints.
+ * - Implement robust input validation and error handling to safeguard against invalid data and unexpected conditions.
+ * - Enforce secure authentication and authorization measures using API keys, JWT, or similar mechanisms.
+ * - Maintain thorough logging for debugging, monitoring, and auditing, especially for sensitive operations.
+ * - Ensure endpoints are scalable and optimized for performance.
+ *
+ * ## HTTP Methods & RESTful Design
+ *
+ * - **GET:** Retrieve resource data without altering server state.
+ * - **POST:** Create new resources.
+ * - **PUT:** Update existing resources.
+ * - **DELETE:** Remove resources.
+ * - Always use the appropriate HTTP method corresponding to the action.
+ * - Return clear, standardized HTTP status codes (e.g., 200, 201, 400, 404, 500) to communicate the outcome of each request.
+ *
+ * ## /app/api/applications/** Guidelines
+ *
+ * - **CRUD Operations:** Securely implement Create, Read, Update, and Delete operations for applications.
+ * - **Input Validation:** Rigorously validate all incoming data to prevent security vulnerabilities like SQL injection or XSS.
+ * - **Error Handling:** Provide meaningful error messages while concealing sensitive system details.
+ * - **Cursor-Based Pagination:** Utilize cursor-based pagination to efficiently handle large data sets.
+ * - **Authentication & Authorization:** Ensure that only authenticated and authorized users can perform operations.
+ *
+ * ## /app/api/automations/** Guidelines
+ *
+ * - **CRUD Operations:** Mirror the secure practices used in application endpoints to manage automations.
+ * - **Input Validation & Error Handling:** Enforce robust input validation and error handling consistently across automation endpoints.
+ * - **Pagination:** Apply cursor-based pagination to manage large volumes of automation data.
+ * - **Security:** Limit access to authorized users by enforcing token-based authentication and role-based access control.
+ *
+ * ## /app/api/webhooks/** Guidelines
+ *
+ * - **Webhook Endpoints:** Develop secure webhook endpoints for integrations such as n8n, reddit-scrape, and youtube-scrape.
+ * - **Authentication:** Secure webhook endpoints using API keys or JWT tokens to verify the identity of the requester.
+ * - **Logging:** Implement detailed logging for incoming webhook requests and responses to facilitate troubleshooting and auditing.
+ * - **Error Handling:** Ensure that webhooks return appropriate HTTP status codes and clear error messages in case of failures.
+ * - **Data Sanitization:** Validate and sanitize all incoming data to mitigate potential security threats.
+ *
+ * ## Code Examples
+ *
+ * ### Example: Secure CRUD Operations for Applications
+ *
+ * ```ts
+ * import { NextApiRequest, NextApiResponse } from 'next';
+ *
+ * const handleApplications = async (req: NextApiRequest, res: NextApiResponse) => {
+ *   try {
+ *     switch (req.method) {
+ *       case 'GET':
+ *         // Retrieve a list of applications with cursor-based pagination
+ *         res.status(200).json({ message: 'List of applications' });
+ *         break;
+ *       case 'POST':
+ *         // Validate input and create a new application
+ *         res.status(201).json({ message: 'Application created' });
+ *         break;
+ *       case 'PUT':
+ *         // Validate input and update an existing application
+ *         res.status(200).json({ message: 'Application updated' });
+ *         break;
+ *       case 'DELETE':
+ *         // Delete an application
+ *         res.status(200).json({ message: 'Application deleted' });
+ *         break;
+ *       default:
+ *         res.status(405).end(`Method ${req.method} Not Allowed`);
+ *     }
+ *   } catch (error) {
+ *     res.status(500).json({ error: 'Internal server error' });
+ *   }
+ * };
+ *
+ * export default handleApplications;
+ * ```
+ *
+ * ### Example: Secure Webhook Endpoint
+ *
+ * ```ts
+ * import { NextApiRequest, NextApiResponse } from 'next';
+ * import { verifyToken } from '../../utils/auth';
+ *
+ * const handleWebhook = async (req: NextApiRequest, res: NextApiResponse) => {
+ *   // Secure the endpoint using API keys or JWT tokens
+ *   const token = req.headers.authorization?.split(' ')[1];
+ *   if (!token || !verifyToken(token)) {
+ *     return res.status(401).json({ error: 'Unauthorized' });
+ *   }
+ *
+ *   try {
+ *     // Process the webhook payload and log request details for auditing purposes
+ *     res.status(200).json({ message: 'Webhook processed successfully' });
+ *   } catch (error) {
+ *     res.status(500).json({ error: 'Internal server error' });
+ *   }
+ * };
+ *
+ * export default handleWebhook;
+ * ```
+ */
+ 
+ // This file contains guidelines and code examples for API Endpoints & RESTful Best Practices.
+

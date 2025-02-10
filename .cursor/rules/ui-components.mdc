@@ -1,0 +1,127 @@
+---
+description: Guidelines for UI Components & Magic UI Component Integration
+globs: .{css,ts}
+---
+/**
+ * Title: uicomponents
+ * Description: Guidelines for UI Components & Magic UI Component Integration
+ *
+ * # UI Components & Magic UI Components Guide
+ *
+ * ## General Guidelines
+ *
+ * - Standardize the use of Magic UI components to maintain consistency and quality across all UI elements.
+ * - Ensure that all components are modular, reusable, and semantically designed.
+ * - Prioritize accessibility by using proper ARIA roles, keyboard navigation support, and responsive design.
+ * - Follow a consistent design system for spacing, typography, colors, and other stylistic elements.
+ * - Document components clearly to facilitate maintenance and collaboration.
+ *
+ * ## /components/shell.tsx Guidelines
+ *
+ * - Serve as the global layout wrapper that consistently includes MainNav and Sidebar.
+ * - Establish a reliable and responsive layout framework that supports multiple pages and nested components.
+ * - Maintain consistency in overall page structure and ensure smooth integration with other UI components.
+ *
+ * ## /components/main-nav.tsx & /components/sidebar.tsx Guidelines
+ *
+ * - Implement navigation components that are responsive and accessible.
+ * - Include active state highlighting to clearly indicate the current navigation item.
+ * - Use semantic HTML and proper ARIA attributes to enhance screen reader compatibility.
+ * - Ensure navigation adapts gracefully to various device sizes and orientations.
+ *
+ * ## /components/chat-interface.tsx Guidelines
+ *
+ * - Provide a consistent, streaming chat interface for real-time user communication.
+ * - Integrate context selection mechanisms to allow users to customize or filter their chat experience.
+ * - Ensure that the chat interface updates dynamically without disrupting the overall UI.
+ * - Optimize performance to handle continuous data streams efficiently.
+ *
+ * ## /components/directory/** Guidelines
+ *
+ * - Utilize reusable filtering components (e.g., directory-filter, automations-filter) to streamline data exploration.
+ * - Leverage grid components (e.g., directory-grid, automations-grid) for a consistent listing layout.
+ * - Ensure that the filtering and grid components work seamlessly together to provide an intuitive user experience.
+ * - Design components with responsiveness in mind to support diverse screen sizes.
+ *
+ * ## /components/cards/** Guidelines
+ *
+ * - Use ApplicationCard and AutomationCard components to semantically display essential details such as logo/thumbnail, name, badges, summary, ratings, and type.
+ * - Ensure cards are interactive and provide clear visual feedback upon user interactions.
+ * - Follow semantic markup practices to enhance both accessibility and SEO.
+ * - Maintain a consistent visual design language across different card types.
+ *
+ * ## /components/forms/review-form.tsx Guidelines
+ *
+ * - Enforce robust input validation and error handling in form submissions.
+ * - Ensure form components are accessible with clear labels, instructions, and validation feedback.
+ * - Design forms to be modular and reusable across different parts of the application.
+ * - Provide immediate, user-friendly feedback on input errors to enhance the overall user experience.
+ *
+ * ## Code Examples
+ *
+ * ### Global Layout Shell
+ *
+ * ```tsx
+ * import React from 'react';
+ * import MainNav from './main-nav';
+ * import Sidebar from './sidebar';
+ *
+ * const Shell = ({ children }: { children: React.ReactNode }) => (
+ *   <div className="layout">
+ *     <MainNav />
+ *     <Sidebar />
+ *     <main>{children}</main>
+ *   </div>
+ * );
+ *
+ * export default Shell;
+ * ```
+ *
+ * ### Responsive Navigation
+ *
+ * ```tsx
+ * import React from 'react';
+ *
+ * const MainNav = () => (
+ *   <nav role="navigation" aria-label="Main Navigation">
+ *     <ul>
+ *       <li className="active">Home</li>
+ *       <li>About</li>
+ *       <li>Services</li>
+ *       <li>Contact</li>
+ *     </ul>
+ *   </nav>
+ * );
+ *
+ * export default MainNav;
+ * ```
+ *
+ * ### Chat Interface Component
+ *
+ * ```tsx
+ * import React, { useState, useEffect } from 'react';
+ *
+ * const ChatInterface = () => {
+ *   const [messages, setMessages] = useState<string[]>([]);
+ *
+ *   useEffect(() => {
+ *     // Implement streaming chat logic and context selection here
+ *   }, []);
+ *
+ *   return (
+ *     <div className="chat-interface">
+ *       {/* Render chat messages */}
+ *       {messages.map((msg, index) => (
+ *         <p key={index}>{msg}</p>
+ *       ))}
+ *       {/* Additional UI for context selection */}
+ *     </div>
+ *   );
+ * };
+ *
+ * export default ChatInterface;
+ * ```
+ */
+ 
+ // This file contains guidelines and code examples for UI Components & Magic UI Component Integration.
+

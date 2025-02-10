@@ -1,0 +1,133 @@
+---
+description: Guidelines for Application Pages and SSR/SSG Best Practices globs
+globs: .tsx
+---
+
+/**
+ * Title: applicationpages
+ * Description: Guidelines for Application Pages & SSR/SSG Best Practices Guide
+ *
+ * # Application Pages & SSR/SSG Best Practices Guide
+ *
+ * ## General Guidelines
+ *
+ * - Adhere to SSR/SSG best practices to optimize performance, SEO, and user experience.
+ * - Maintain a clear, accessible UI with semantic HTML and ARIA roles as needed.
+ * - Ensure consistency in design and layout across all application pages.
+ * - Write modular, maintainable code that is easy to update and test.
+ *
+ * ## SSR/SSG Best Practices
+ *
+ * - **Rendering Strategy:** Choose Server-Side Rendering (SSR) or Static Site Generation (SSG) based on the page's dynamic requirements.
+ * - **Performance:** Optimize load times by pre-rendering critical content and leveraging caching mechanisms.
+ * - **SEO:** Ensure that pages rendered with SSR/SSG contain the necessary metadata and structured data for search engines.
+ * - **Error Handling:** Implement robust error handling and fallback UI to handle any rendering issues gracefully.
+ *
+ * ## Design & Accessibility
+ *
+ * - **Minimalist Design:** Favor a minimal design approach, especially on primary entry pages, to focus user attention on key call-to-action (CTA) elements.
+ * - **Accessibility:** Follow WCAG guidelines to ensure that text, interactive elements, and navigation are accessible to all users.
+ * - **Responsive Design:** Ensure that all pages render well on a variety of devices, using responsive grid layouts and adaptive UI components.
+ * - **Consistency:** Use a consistent design language (colors, fonts, spacing) across the application.
+ *
+ * ## /app/page.tsx Guidelines
+ *
+ * - **Layout:** Use a minimal, uncluttered design that immediately presents the core message and CTA.
+ * - **CTAs:** Place clear and prominent CTA elements to guide user actions.
+ * - **Performance:** Prioritize the rendering of above-the-fold content for faster user engagement.
+ * - **Navigation:** Include intuitive navigation elements that help users quickly access other areas of the application.
+ *
+ * ## /app/chat/** Guidelines
+ *
+ * - **Streaming Interface:** Implement a streaming chat interface that provides real-time updates without page refreshes.
+ * - **Session Management:** Assign unique session IDs for each chat instance to manage user conversations effectively.
+ * - **Logging:** Maintain detailed context logging for each session to aid in debugging and to analyze user interactions.
+ * - **Message History:** Ensure that chat histories are persistent across sessions so that users can resume conversations seamlessly.
+ * - **Accessibility:** Use accessible components for chat messages and input fields, ensuring that screen readers and keyboard navigation work properly.
+ *
+ * ## /app/directory/page.tsx Guidelines
+ *
+ * - **Overview:** Provide a clear and concise directory overview that introduces users to the available sections.
+ * - **Navigation Cards:** Use visually distinct navigation cards to link to the Applications and Automations sections.
+ * - **Responsiveness:** Ensure that the layout adapts fluidly across different screen sizes and devices.
+ * - **User Experience:** Keep the interface intuitive, with clear labels and easy-to-read typography.
+ *
+ * ## /app/directory/applications/** Guidelines
+ *
+ * - **Grid Layout:** Utilize a responsive grid layout to display application data in an organized manner.
+ * - **Filtering & Search:** Incorporate filtering and search functionalities to allow users to easily locate specific applications.
+ * - **Pagination:** Implement cursor-based pagination for efficient navigation through large data sets.
+ * - **Data Enrichment:** Ensure that each application entry is enriched with relevant metadata and imagery to improve context and usability.
+ *
+ * ## /app/directory/automations/** Guidelines
+ *
+ * - **Interactive Grid:** Design a responsive grid layout that supports interactive elements.
+ * - **Filtering & Pagination:** Include filtering options and pagination controls to simplify navigation.
+ * - **Detail Views:** Enable interactive detail views that may include:
+ *   - **Video Embeds:** For demonstration or tutorial purposes.
+ *   - **Step-by-Step Recipes:** To guide users through automation processes.
+ *   - **Enrichment Sections:** To provide additional context or related information.
+ * - **User Feedback:** Provide clear feedback on interactions (e.g., hover states, active selections) to enhance user experience.
+ *
+ * ## Code Examples and UI Components
+ *
+ * ### Example: /app/page.tsx
+ *
+ * ```tsx
+ * import React from 'react';
+ *
+ * const HomePage = () => (
+ *   <main>
+ *     <header>
+ *       <h1>Welcome to Our App</h1>
+ *       <button aria-label="Get Started">Get Started</button>
+ *     </header>
+ *     {/* Minimal design with focus on CTA */}
+ *   </main>
+ * );
+ *
+ * export default HomePage;
+ * ```
+ *
+ * ### Example: /app/chat/[sessionId].tsx
+ *
+ * ```tsx
+ * import React, { useState, useEffect } from 'react';
+ *
+ * const ChatPage = ({ sessionId }: { sessionId: string }) => {
+ *   const [messages, setMessages] = useState([]);
+ *
+ *   useEffect(() => {
+ *     // Initialize streaming chat interface with detailed context logging
+ *     // Ensure persistent message history for session: sessionId
+ *   }, [sessionId]);
+ *
+ *   return (
+ *     <div>
+ *       <h2>Chat Session: {sessionId}</h2>
+ *       {/* Render chat messages here */}
+ *     </div>
+ *   );
+ * };
+ *
+ * export default ChatPage;
+ * ```
+ *
+ * ### Example: /app/directory/applications/[id].tsx
+ *
+ * ```tsx
+ * import React from 'react';
+ *
+ * const ApplicationCard = ({ application }) => (
+ *   <div className="application-card">
+ *     <h3>{application.name}</h3>
+ *     <p>{application.description}</p>
+ *     {/* Additional enriched data */}
+ *   </div>
+ * );
+ *
+ * export default ApplicationCard;
+ * ```
+ */
+ 
+ // This file contains guidelines and code examples for Application Pages & SSR/SSG Best Practices.

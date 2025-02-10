@@ -1,0 +1,182 @@
+---
+description: Development Plan for EverythingBagel AI
+globs: 
+---
+import React from "react";
+
+const DevelopmentPlan = () => (
+  <pre style={{ whiteSpace: "pre-wrap" }}>
+{`# EverythingBagelAI Development Plan
+
+This development plan outlines the phased approach to evolving the existing v0 codebase into the final, fully integrated EverythingBagelAI platform. The plan details steps for reviewing your v0 project, setting up the local development environment, integrating with GitHub, and then proceeding with incremental feature development according to the PRD.
+
+---
+
+## Phase 0: Pre-Development Setup
+
+### Objectives:
+- Integrate the existing v0 front-end code into the new codebase.
+- Set up the local development environment for immediate testing.
+- Establish a GitHub repository for version control and frequent commits.
+- Review the imported v0 code to identify areas that need to be updated or integrated with new features.
+
+### Tasks:
+1. **Submit v0 Project Link:**
+   - The system will prompt you to provide the link or path to your existing v0 project.
+   - Once provided, the AI Composer will import the v0 code into the current codebase.
+
+2. **Code Review:**
+   - Automatically review the imported code for compliance with the new PRD requirements.
+   - Identify missing components or discrepancies that must be addressed.
+   - Generate a summary report of the findings.
+
+3. **Local Environment Setup:**
+   - Configure the project to run on localhost.
+   - Install all dependencies (e.g., Tailwind CSS, Magic UI, Next.js, etc.).
+   - Run the v0 code on localhost to ensure it builds and functions, even if partially.
+   - Verify that basic routing and components render correctly.
+
+4. **GitHub Integration:**
+   - Set up a GitHub repository for the project.
+   - Configure Git in the local development environment and push the v0 code.
+   - Establish branch strategies and commit guidelines to ensure frequent, incremental updates.
+   - Document the GitHub connection in the project’s README.
+
+*Important: Ensure that the v0 code is integrated, reviewed, and running locally before proceeding with further development.*
+
+---
+
+## Phase 1: Analysis and Initial Setup
+
+### Objectives:
+- Analyze the imported v0 code against the new PRD.
+- Finalize environment configurations and service integrations.
+- Plan updates needed to align v0 with the complete requirements.
+
+### Tasks:
+- **Detailed Code Review:**
+  - Compare the existing v0 implementation with the PRD.
+  - Identify features to be extended or new API endpoints and webhook integrations to be added.
+- **Environment Configuration:**
+  - Confirm all necessary environment variables are set (e.g., NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY, n8n API keys).
+- **Local Testing:**
+  - Run the application on localhost to check baseline functionality.
+- **Documentation Update:**
+  - Update README.md with setup instructions and GitHub connection details.
+
+---
+
+## Phase 2: Database and API Endpoints Integration
+
+### Objectives:
+- Implement any new database schema changes and verify existing migrations.
+- Extend API endpoints as per the PRD specifications.
+- Enable secure real-time data access.
+
+### Tasks:
+- **Database Schema Migration:**
+  - Run migration scripts to create/update tables (applications, automations, categories, sub_categories, reviews, vector_documents, chat_logs, scraped_data).
+  - Verify that indexes and constraints (including full-text search) are properly set.
+- **API Endpoints Implementation:**
+  - Develop or extend API routes for applications and automations (CRUD operations).
+  - Implement additional webhook endpoints:
+    - `/api/webhooks/n8n`
+    - `/api/webhooks/reddit-scrape`
+    - `/api/webhooks/youtube-scrape`
+- **Authentication & Real-Time Integration:**
+  - Integrate Supabase authentication for protected endpoints.
+  - Set up real-time subscriptions for key tables.
+- **Local Testing:**
+  - Test API endpoints on localhost to ensure data retrieval and pagination work as expected.
+
+---
+
+## Phase 3: n8n Integration and Webhook Configuration
+
+### Objectives:
+- Connect external n8n workflows to the new webhook endpoints.
+- Validate that data ingestion flows update the database correctly.
+- Review logs and error handling for webhook-triggered updates.
+
+### Tasks:
+- **Webhook Endpoint Testing:**
+  - Test `/api/webhooks/n8n`, `/api/webhooks/reddit-scrape`, and `/api/webhooks/youtube-scrape` endpoints.
+  - Simulate data pushes from n8n to confirm proper field updates (e.g., vector_documents, reddit_sentiment, youtube_insights/youtube_transcript).
+- **n8n Workflow Integration:**
+  - Configure and run n8n workflows that simulate scraping and data generation.
+  - Ensure that the workflows push data to the correct endpoints.
+- **Logging & Error Handling:**
+  - Implement detailed logging for each webhook endpoint.
+  - Verify error handling strategies and adjust based on test results.
+
+---
+
+## Phase 4: UI/UX Enhancements and History Tracking Integration
+
+### Objectives:
+- Enhance UI components to meet the PRD design.
+- Integrate history tracking for chat and directory interactions.
+- Update navigation and detail pages to display enrichment data.
+
+### Tasks:
+- **UI Enhancements:**
+  - Update directory pages (applications and automations) with advanced filtering, search, and interactive elements.
+  - Enhance detail pages to include enrichment sections (Reddit sentiment, YouTube insights).
+  - Refine global navigation (MainNav, Sidebar, Shell) for consistency.
+- **Chat Interface Improvements:**
+  - Improve chat pages for better streaming responses, context selection, and session logging.
+- **History Tracking:**
+  - Ensure user interactions (chat messages, filter changes, card clicks) are logged in the respective tables.
+  - Create UI components to optionally review history (if required for debugging).
+
+---
+
+## Phase 5: Testing, Optimization, and Deployment
+
+### Objectives:
+- Validate functionality, security, and performance across all new features.
+- Deploy the application on Vercel and monitor its behavior in a production-like environment.
+
+### Tasks:
+- **Testing:**
+  - Write unit and integration tests for API endpoints, UI components, and webhook integrations.
+  - Test real-time subscriptions and cursor-based pagination thoroughly.
+- **Performance and Security Audits:**
+  - Optimize database queries, indexing, and caching strategies.
+  - Conduct security reviews, especially for RLS, API key validation, and input sanitization.
+- **Vercel Deployment:**
+  - Finalize Vercel configuration (environment variables, build settings, staging/production setup).
+  - Deploy to staging, verify functionality and performance, then proceed to production.
+- **Documentation Update:**
+  - Update README.md and related documentation with Vercel-specific instructions, testing results, and deployment guidelines.
+
+---
+
+## Phase 6: Final Review and Documentation
+
+### Objectives:
+- Finalize all code documentation and inline comments.
+- Prepare a comprehensive developer handoff guide for future maintenance.
+- Set up post-deployment monitoring and performance dashboards.
+
+### Tasks:
+- **Documentation:**
+  - Update README.md with comprehensive setup instructions, environment configurations, and CI/CD pipeline details.
+  - Finalize API and webhook documentation.
+- **Developer Handoff:**
+  - Compile a maintenance guide covering database migrations, logging, and version control practices.
+- **Monitoring:**
+  - Set up dashboards and alerts (via Vercel Analytics, Supabase dashboards, Sentry, etc.) to monitor system performance.
+
+---
+
+## Summary
+
+This development plan is organized in sequential phases to evolve the existing v0 codebase into the final EverythingBagelAI platform. The plan guides the process from initial code import and review, local setup and GitHub integration, through database and API endpoint enhancements, n8n and webhook integration, UI/UX improvements, testing, and final deployment on Vercel. Frequent commits, local testing on localhost, and continuous integration with GitHub will ensure that progress is easily trackable throughout development.
+
+Happy building—this plan will serve as your roadmap to incrementally develop a robust, secure, and feature-rich EverythingBagelAI platform!
+`}
+  </pre>
+);
+
+export default DevelopmentPlan;
