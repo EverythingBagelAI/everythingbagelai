@@ -1,0 +1,9 @@
+-- Drop existing tables in the correct order
+DROP TABLE IF EXISTS scraped_data CASCADE;
+DROP TABLE IF EXISTS chat_logs CASCADE;
+DROP TABLE IF EXISTS vector_documents CASCADE;
+DROP TABLE IF EXISTS reviews CASCADE;
+DROP TABLE IF EXISTS automations CASCADE;
+DROP TABLE IF EXISTS applications CASCADE;
+DROP TABLE IF EXISTS sub_categories CASCADE;
+DROP TABLE IF EXISTS categories CASCADE; 
