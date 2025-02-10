@@ -13,9 +13,9 @@ export default function CodingChatPage() {
 Always provide code examples when relevant, and explain your reasoning clearly.`;
 
   return (
-    <div className="container py-4">
-      <div className="mx-auto max-w-4xl">
-        <div className="mb-4">
+    <div className="container h-full py-6">
+      <div className="mx-auto max-w-4xl space-y-4">
+        <div>
           <h1 className="text-2xl font-bold">Coding Assistant</h1>
           <p className="text-muted-foreground">
             Get help with code review, debugging, and development best practices.

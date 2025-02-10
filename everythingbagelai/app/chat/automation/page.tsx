@@ -13,9 +13,9 @@ export default function AutomationChatPage() {
 Always provide practical examples and step-by-step guidance when relevant.`;
 
   return (
-    <div className="container py-4">
-      <div className="mx-auto max-w-4xl">
-        <div className="mb-4">
+    <div className="container h-full py-6">
+      <div className="mx-auto max-w-4xl space-y-4">
+        <div>
           <h1 className="text-2xl font-bold">Automation Assistant</h1>
           <p className="text-muted-foreground">
             Get help with workflow automation, tool selection, and integration strategies.

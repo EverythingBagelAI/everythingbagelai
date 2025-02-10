@@ -14,9 +14,9 @@ export default function AiAppsChatPage() {
 Always provide specific tool recommendations and practical implementation advice.`;
 
   return (
-    <div className="container py-4">
-      <div className="mx-auto max-w-4xl">
-        <div className="mb-4">
+    <div className="container h-full py-6">
+      <div className="mx-auto max-w-4xl space-y-4">
+        <div>
           <h1 className="text-2xl font-bold">AI Apps Assistant</h1>
           <p className="text-muted-foreground">
             Get help discovering and implementing AI applications for your needs.
