@@ -1,7 +1,7 @@
 "use client"
 import * as React from "react"
-import { motion } from "framer-motion"
-import { Check } from "lucide-react"
+import { Check, Search } from "lucide-react"
+import { useRouter, useSearchParams } from "next/navigation"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -10,60 +10,73 @@ import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from "@
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 
-const subcategories = [
-  "Workflow",
-  "Data Processing",
-  "Task Management",
-  "Communication",
-  "Analytics",
-  "Integration",
-  "Scheduling",
-  "Reporting",
-]
+interface Category {
+  id: string
+  name: string
+}
 
-const categories = [
-  { value: "all", label: "All" },
-  { value: "ai-applications", label: "AI Applications" },
-  { value: "development-tools", label: "Development Tools" },
-  { value: "content-creation", label: "Content Creation" },
-]
+interface ApplicationsFilterProps {
+  categories: Category[]
+}
 
 const types = [
-  { value: "all", label: "All" },
-  { value: "free", label: "Free" },
-  { value: "premium", label: "Premium" },
-  { value: "paid", label: "Paid" },
+  { value: "Free", label: "Free" },
+  { value: "Premium", label: "Premium" },
+  { value: "Paid", label: "Paid" },
 ]
 
-export function ApplicationsFilter() {
-  const [selectedCategories, setSelectedCategories] = React.useState<string[]>([])
-  const [selectedTypes, setSelectedTypes] = React.useState<string[]>([])
-  const [selectedSubcategories, setSelectedSubcategories] = React.useState<string[]>([])
+export function ApplicationsFilter({ categories }: ApplicationsFilterProps) {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const [searchValue, setSearchValue] = React.useState(searchParams.get("search") || "")
 
-  const toggleCategory = (category: string) => {
-    if (category === "all") {
-      setSelectedCategories([])
-      return
+  // Get current filter values from URL
+  const currentTypes = searchParams.get("types")?.split(",") || []
+  const currentCategories = searchParams.get("categories")?.split(",") || []
+  
+  const updateFilters = (type: string, value: string) => {
+    const params = new URLSearchParams(searchParams.toString())
+    
+    if (type === "types") {
+      const types = currentTypes.includes(value)
+        ? currentTypes.filter(t => t !== value)
+        : [...currentTypes, value]
+      
+      if (types.length === 0) {
+        params.delete("types")
+      } else {
+        params.set("types", types.join(","))
+      }
     }
-    setSelectedCategories((prev) => 
-      prev.includes(category) ? prev.filter((t) => t !== category) : [...prev, category]
-    )
+    
+    if (type === "categories") {
+      const updatedCategories = currentCategories.includes(value)
+        ? currentCategories.filter(c => c !== value)
+        : [...currentCategories, value]
+      
+      if (updatedCategories.length === 0) {
+        params.delete("categories")
+        params.delete("subCategories") // Reset sub-categories when categories are cleared
+      } else {
+        params.set("categories", updatedCategories.join(","))
+        params.delete("subCategories") // Reset sub-categories when categories change
+      }
+    }
+    
+    router.push(`?${params.toString()}`)
   }
 
-  const toggleType = (type: string) => {
-    if (type === "all") {
-      setSelectedTypes([])
-      return
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    setSearchValue(value)
+    
+    const params = new URLSearchParams(searchParams.toString())
+    if (value) {
+      params.set("search", value)
+    } else {
+      params.delete("search")
     }
-    setSelectedTypes((prev) => 
-      prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
-    )
-  }
-
-  const toggleSubcategory = (subcategory: string) => {
-    setSelectedSubcategories((prev) =>
-      prev.includes(subcategory) ? prev.filter((item) => item !== subcategory) : [...prev, subcategory],
-    )
+    router.push(`?${params.toString()}`)
   }
 
   return (
@@ -72,11 +85,52 @@ export function ApplicationsFilter() {
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="outline" className="w-full md:w-[200px] justify-start">
-              {selectedCategories.length > 0 ? (
+              {currentTypes.length > 0 ? (
+                <>
+                  Types
+                  <Badge variant="secondary" className="ml-2">
+                    {currentTypes.length}
+                  </Badge>
+                </>
+              ) : (
+                "Select Types"
+              )}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-[200px] p-0">
+            <Command>
+              <CommandList>
+                <CommandEmpty>No types found.</CommandEmpty>
+                <CommandGroup>
+                  {types.map((type) => (
+                    <CommandItem 
+                      key={type.value} 
+                      onSelect={() => updateFilters("types", type.value)}
+                      className="cursor-pointer"
+                    >
+                      <Check
+                        className={cn(
+                          "mr-2 h-4 w-4",
+                          currentTypes.includes(type.value) ? "opacity-100" : "opacity-0"
+                        )}
+                      />
+                      {type.label}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
+
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant="outline" className="w-full md:w-[200px] justify-start">
+              {currentCategories.length > 0 ? (
                 <>
                   Categories
                   <Badge variant="secondary" className="ml-2">
-                    {selectedCategories.length}
+                    {currentCategories.length}
                   </Badge>
                 </>
               ) : (
@@ -89,46 +143,36 @@ export function ApplicationsFilter() {
               <CommandList>
                 <CommandEmpty>No categories found.</CommandEmpty>
                 <CommandGroup>
+                  <CommandItem 
+                    onSelect={() => {
+                      const params = new URLSearchParams(searchParams.toString())
+                      params.delete("categories")
+                      params.delete("subCategories")
+                      router.push(`?${params.toString()}`)
+                    }}
+                    className="cursor-pointer"
+                  >
+                    <Check
+                      className={cn(
+                        "mr-2 h-4 w-4",
+                        currentCategories.length === 0 ? "opacity-100" : "opacity-0"
+                      )}
+                    />
+                    All Applications
+                  </CommandItem>
                   {categories.map((category) => (
-                    <CommandItem key={category.value} onSelect={() => toggleCategory(category.value)} className="cursor-pointer">
+                    <CommandItem 
+                      key={category.id} 
+                      onSelect={() => updateFilters("categories", category.id)}
+                      className="cursor-pointer"
+                    >
                       <Check
-                        className={cn("mr-2 h-4 w-4", selectedCategories.includes(category.value) ? "opacity-100" : "opacity-0")}
+                        className={cn(
+                          "mr-2 h-4 w-4",
+                          currentCategories.includes(category.id) ? "opacity-100" : "opacity-0"
+                        )}
                       />
-                      {category.label}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              </CommandList>
-            </Command>
-          </PopoverContent>
-        </Popover>
-
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button variant="outline" className="w-full md:w-[200px] justify-start">
-              {selectedTypes.length > 0 ? (
-                <>
-                  Type
-                  <Badge variant="secondary" className="ml-2">
-                    {selectedTypes.length}
-                  </Badge>
-                </>
-              ) : (
-                "Select Type"
-              )}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-[200px] p-0">
-            <Command>
-              <CommandList>
-                <CommandEmpty>No types found.</CommandEmpty>
-                <CommandGroup>
-                  {types.map((type) => (
-                    <CommandItem key={type.value} onSelect={() => toggleType(type.value)} className="cursor-pointer">
-                      <Check
-                        className={cn("mr-2 h-4 w-4", selectedTypes.includes(type.value) ? "opacity-100" : "opacity-0")}
-                      />
-                      {type.label}
+                      {category.name}
                     </CommandItem>
                   ))}
                 </CommandGroup>
@@ -138,23 +182,14 @@ export function ApplicationsFilter() {
         </Popover>
 
         <div className="relative flex-grow">
-          <Input placeholder="Search applications..." type="search" />
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            placeholder="Search applications..."
+            value={searchValue}
+            onChange={handleSearch}
+            className="pl-10"
+          />
         </div>
-      </div>
-      <div className="flex flex-wrap justify-start gap-2">
-        {subcategories.map((subcategory) => (
-          <motion.div key={subcategory} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Button
-              type="button"
-              variant={selectedSubcategories.includes(subcategory) ? "default" : "secondary"}
-              onClick={() => toggleSubcategory(subcategory)}
-              className="transition-colors text-[11px] py-1 h-7 px-3"
-              size="sm"
-            >
-              {subcategory}
-            </Button>
-          </motion.div>
-        ))}
       </div>
     </div>
   )

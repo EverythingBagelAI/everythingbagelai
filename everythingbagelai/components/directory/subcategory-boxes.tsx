@@ -1,7 +1,8 @@
 "use client"
-
+import * as React from "react"
 import { useRouter, useSearchParams } from "next/navigation"
-import { Card } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { motion } from "framer-motion"
 
 interface Category {
   id: string
@@ -22,55 +23,42 @@ interface SubCategoryBoxesProps {
 export function SubCategoryBoxes({ categories, subCategories }: SubCategoryBoxesProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const currentCategory = searchParams.get("category")
-  const currentSubCategory = searchParams.get("subCategory")
+  const currentCategories = searchParams.get("categories")?.split(",") || []
+  const currentSubCategories = searchParams.get("subCategories")?.split(",") || []
 
-  // Filter subcategories based on selected category
-  const filteredSubCategories = currentCategory
-    ? subCategories.filter((sub) => sub.category_id === currentCategory)
+  // Filter subcategories based on selected categories
+  const filteredSubCategories = currentCategories.length > 0
+    ? subCategories.filter(sub => currentCategories.includes(sub.category_id))
     : subCategories
 
-  function onSubCategoryClick(subCategoryId: string) {
+  const toggleSubCategory = (subCategoryId: string) => {
     const params = new URLSearchParams(searchParams.toString())
-    if (currentSubCategory === subCategoryId) {
-      params.delete("subCategory")
+    const updatedSubCategories = currentSubCategories.includes(subCategoryId)
+      ? currentSubCategories.filter(id => id !== subCategoryId)
+      : [...currentSubCategories, subCategoryId]
+
+    if (updatedSubCategories.length > 0) {
+      params.set("subCategories", updatedSubCategories.join(","))
     } else {
-      params.set("subCategory", subCategoryId)
+      params.delete("subCategories")
     }
+
     router.push(`?${params.toString()}`)
   }
 
-  // Group subcategories by category
-  const groupedSubCategories = subCategories.reduce((acc, subCategory) => {
-    const category = categories.find(cat => cat.id === subCategory.category_id)
-    if (!category) return acc
-
-    if (!acc[category.name]) {
-      acc[category.name] = []
-    }
-    acc[category.name].push(subCategory)
-    return acc
-  }, {} as Record<string, SubCategory[]>)
-
   return (
-    <div className="space-y-8">
-      {Object.entries(groupedSubCategories).map(([categoryName, subs]) => (
-        <div key={categoryName} className="space-y-4">
-          <h2 className="text-lg font-semibold">{categoryName}</h2>
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-            {subs.map((subCategory) => (
-              <Card
-                key={subCategory.id}
-                className={`cursor-pointer p-4 text-center transition-colors hover:bg-muted/50 ${
-                  currentSubCategory === subCategory.id ? "bg-muted" : ""
-                }`}
-                onClick={() => onSubCategoryClick(subCategory.id)}
-              >
-                <div className="font-medium">{subCategory.name}</div>
-              </Card>
-            ))}
-          </div>
-        </div>
+    <div className="flex flex-wrap gap-2">
+      {filteredSubCategories.map((subCategory) => (
+        <motion.div key={subCategory.id} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <Button
+            variant={currentSubCategories.includes(subCategory.id) ? "default" : "secondary"}
+            onClick={() => toggleSubCategory(subCategory.id)}
+            className="text-[11px] py-1 h-7 px-3"
+            size="sm"
+          >
+            {subCategory.name}
+          </Button>
+        </motion.div>
       ))}
     </div>
   )
