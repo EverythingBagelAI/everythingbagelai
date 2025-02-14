@@ -93,12 +93,18 @@ export default async function ApplicationPage({ params }: { params: { id: string
       {/* Header Section */}
       <div className="flex flex-col gap-4 sm:gap-6">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div className="space-y-1">
-            <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">{application.name}</h1>
-            <div className="flex flex-wrap gap-2">
-              <Badge variant="secondary">{application.categories.name}</Badge>
-              <Badge variant="outline">{application.sub_categories.name}</Badge>
-              <Badge>{application.type}</Badge>
+          <div className="flex items-center gap-6">
+            <Avatar className="h-24 w-24">
+              <AvatarImage src={application.logo_url || ""} alt={`${application.name} logo`} />
+              <AvatarFallback className="text-2xl">{application.name.slice(0, 2).toUpperCase()}</AvatarFallback>
+            </Avatar>
+            <div className="space-y-2">
+              <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">{application.name}</h1>
+              <div className="flex flex-wrap gap-2">
+                <Badge variant="secondary">{application.categories.name}</Badge>
+                <Badge variant="outline">{application.sub_categories.name}</Badge>
+                <Badge>{application.type}</Badge>
+              </div>
             </div>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -250,15 +256,15 @@ export default async function ApplicationPage({ params }: { params: { id: string
                           <AvatarFallback>{alt.name.slice(0, 2).toUpperCase()}</AvatarFallback>
                         </Avatar>
                         <div className="flex flex-1 items-center justify-between">
-                          <h3 className="font-semibold">{alt.name}</h3>
+                          <h3 className="font-semibold line-clamp-1">{alt.name}</h3>
                           <Badge>{alt.type}</Badge>
                         </div>
                       </div>
                     </CardHeader>
                     <CardContent className="p-4">
-                      <p className="line-clamp-2 text-sm text-muted-foreground">{alt.summary}</p>
+                      <p className="line-clamp-2 text-sm text-muted-foreground min-h-[2.5rem]">{alt.summary}</p>
                     </CardContent>
-                    <CardFooter className="p-4 flex flex-col items-start gap-2">
+                    <CardFooter className="p-4 mt-auto">
                       <div className="flex flex-wrap gap-2">
                         <Badge variant="secondary" className="w-auto">
                           {alt.categories.name}

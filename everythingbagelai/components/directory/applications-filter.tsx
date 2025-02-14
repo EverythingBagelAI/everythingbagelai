@@ -21,7 +21,7 @@ interface ApplicationsFilterProps {
 
 const types = [
   { value: "Free", label: "Free" },
-  { value: "Premium", label: "Premium" },
+  { value: "Freemium", label: "Freemium" },
   { value: "Paid", label: "Paid" },
 ]
 
@@ -32,7 +32,7 @@ export function ApplicationsFilter({ categories }: ApplicationsFilterProps) {
 
   // Get current filter values from URL
   const currentTypes = searchParams.get("types")?.split(",") || []
-  const currentCategories = searchParams.get("categories")?.split(",") || []
+  const currentCategory = searchParams.get("category")
   
   const updateFilters = (type: string, value: string) => {
     const params = new URLSearchParams(searchParams.toString())
@@ -49,17 +49,13 @@ export function ApplicationsFilter({ categories }: ApplicationsFilterProps) {
       }
     }
     
-    if (type === "categories") {
-      const updatedCategories = currentCategories.includes(value)
-        ? currentCategories.filter(c => c !== value)
-        : [...currentCategories, value]
-      
-      if (updatedCategories.length === 0) {
-        params.delete("categories")
-        params.delete("subCategories") // Reset sub-categories when categories are cleared
+    if (type === "category") {
+      if (value === "all") {
+        params.delete("category")
+        params.delete("subCategories") // Reset sub-categories when category is cleared
       } else {
-        params.set("categories", updatedCategories.join(","))
-        params.delete("subCategories") // Reset sub-categories when categories change
+        params.set("category", value)
+        params.delete("subCategories") // Reset sub-categories when category changes
       }
     }
     
@@ -126,15 +122,15 @@ export function ApplicationsFilter({ categories }: ApplicationsFilterProps) {
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="outline" className="w-full md:w-[200px] justify-start">
-              {currentCategories.length > 0 ? (
+              {currentCategory ? (
                 <>
-                  Categories
+                  Category
                   <Badge variant="secondary" className="ml-2">
-                    {currentCategories.length}
+                    1
                   </Badge>
                 </>
               ) : (
-                "Select Categories"
+                "Select Category"
               )}
             </Button>
           </PopoverTrigger>
@@ -144,18 +140,13 @@ export function ApplicationsFilter({ categories }: ApplicationsFilterProps) {
                 <CommandEmpty>No categories found.</CommandEmpty>
                 <CommandGroup>
                   <CommandItem 
-                    onSelect={() => {
-                      const params = new URLSearchParams(searchParams.toString())
-                      params.delete("categories")
-                      params.delete("subCategories")
-                      router.push(`?${params.toString()}`)
-                    }}
+                    onSelect={() => updateFilters("category", "all")}
                     className="cursor-pointer"
                   >
                     <Check
                       className={cn(
                         "mr-2 h-4 w-4",
-                        currentCategories.length === 0 ? "opacity-100" : "opacity-0"
+                        !currentCategory ? "opacity-100" : "opacity-0"
                       )}
                     />
                     All Applications
@@ -163,13 +154,13 @@ export function ApplicationsFilter({ categories }: ApplicationsFilterProps) {
                   {categories.map((category) => (
                     <CommandItem 
                       key={category.id} 
-                      onSelect={() => updateFilters("categories", category.id)}
+                      onSelect={() => updateFilters("category", category.id)}
                       className="cursor-pointer"
                     >
                       <Check
                         className={cn(
                           "mr-2 h-4 w-4",
-                          currentCategories.includes(category.id) ? "opacity-100" : "opacity-0"
+                          currentCategory === category.id ? "opacity-100" : "opacity-0"
                         )}
                       />
                       {category.name}
