@@ -11,6 +11,24 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
+  const url = request.nextUrl
+  const hostname = request.headers.get('host') || ''
+  const isConsultingDomain = hostname.includes('everythingbagelai.consulting')
+  const isMainDomain = hostname.includes('everythingbagelai.com') || hostname.includes('vercel.app')
+
+  // Handle domain-specific routing
+  if (isConsultingDomain) {
+    // If on consulting domain but not on consulting page, redirect to consulting
+    if (!url.pathname.startsWith('/consulting')) {
+      return NextResponse.redirect(new URL('/consulting', request.url))
+    }
+  } else if (isMainDomain) {
+    // If on main domain and trying to access consulting, redirect to consulting domain
+    if (url.pathname.startsWith('/consulting')) {
+      return NextResponse.redirect(new URL(`https://everythingbagelai.consulting${url.pathname}`, request.url))
+    }
+  }
+
   const response = NextResponse.next({
     request: {
       headers: request.headers,
@@ -64,4 +82,15 @@ export async function middleware(request: NextRequest) {
   }
 }
 
-// No need for matcher config as we're handling path exclusions in the middleware itself 
+export const config = {
+  matcher: [
+    /*
+     * Match all paths except for:
+     * 1. /api routes
+     * 2. /_next (Next.js internals)
+     * 3. /_static (inside /public)
+     * 4. all root files inside /public (e.g. /favicon.ico)
+     */
+    '/((?!api|_next|_static|_vercel|[\\w-]+\\.\\w+).*)',
+  ],
+} 

@@ -2,24 +2,26 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
-const features = [
+const services = [
   {
-    title: 'AI Consulting',
-    description: 'Expert guidance on AI strategy, tools, and implementation tailored to your business needs.',
+    title: 'AI Strategy & Tool Advisory',
+    description: 'Expert guidance on selecting and implementing the right AI tools for your business.',
     emoji: '🧠',
-    href: '/consulting',
   },
   {
-    title: 'AI Tools',
-    description: 'Access our suite of AI-powered tools for automation, content creation, and more.',
-    emoji: '🛠️',
-    href: '/tools/coming-soon',
+    title: 'Lead Generation',
+    description: 'AI-powered systems that find and engage your ideal prospects 24/7.',
+    emoji: '🎯',
   },
   {
-    title: 'AI Directory',
-    description: 'Curated collection of the best AI tools and resources, updated regularly.',
-    emoji: '📚',
-    href: '/directory/coming-soon',
+    title: 'Sales Automation',
+    description: 'Transform your CRM into an intelligent system that nurtures and closes deals.',
+    emoji: '💼',
+  },
+  {
+    title: 'Content Creation',
+    description: 'Get a full AI creative team that generates engaging content across all channels.',
+    emoji: '✍️',
   },
 ];
 
@@ -40,18 +42,18 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="flex flex-col gap-4 max-w-2xl mx-auto">
-        {features.map((feature) => (
+      <div className="grid gap-4 sm:grid-cols-2 max-w-4xl mx-auto">
+        {services.map((service) => (
           <Card
-            key={feature.title}
+            key={service.title}
             className="flex flex-col items-start gap-2 p-6 transition-colors hover:bg-muted/50"
           >
-            <Link href={feature.href} className="w-full">
+            <Link href="/consulting" className="w-full">
               <div className="flex items-center gap-2">
-                <span className="text-2xl">{feature.emoji}</span>
-                <h3 className="font-semibold">{feature.title}</h3>
+                <span className="text-2xl">{service.emoji}</span>
+                <h3 className="font-semibold">{service.title}</h3>
               </div>
-              <p className="mt-2 text-muted-foreground">{feature.description}</p>
+              <p className="mt-2 text-muted-foreground">{service.description}</p>
             </Link>
           </Card>
         ))}
@@ -59,8 +61,9 @@ export default function Home() {
 
       <div className="mx-auto max-w-[700px] space-y-4 text-center text-muted-foreground">
         <p>
-          From strategy to implementation, we help businesses leverage AI effectively. Our consulting services
-          and curated tools empower you to automate workflows, generate leads, and scale your operations.
+          We help businesses leverage AI effectively through expert consulting and implementation.
+          Our team specializes in creating custom AI solutions that automate workflows, generate
+          leads, and scale your operations.
         </p>
         <p className="text-sm">
           Join the businesses already transforming their operations with EverythingBagel AI.
