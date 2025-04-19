@@ -9,6 +9,47 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      automations: {
+        Row: {
+          id: string
+          created_at: string
+          name: string
+          creator: string | null
+          category_id: string
+          sub_category_id: string | null
+          functionality: string | null
+          video_link: string | null
+          recipe: string | null
+          youtube_transcript: string | null
+          applications_utilized: string[] | null
+        }
+        Insert: {
+          id?: string
+          created_at?: string
+          name: string
+          creator?: string | null
+          category_id: string
+          sub_category_id?: string | null
+          functionality?: string | null
+          video_link?: string | null
+          recipe?: string | null
+          youtube_transcript?: string | null
+          applications_utilized?: string[] | null
+        }
+        Update: {
+          id?: string
+          created_at?: string
+          name?: string
+          creator?: string | null
+          category_id?: string
+          sub_category_id?: string | null
+          functionality?: string | null
+          video_link?: string | null
+          recipe?: string | null
+          youtube_transcript?: string | null
+          applications_utilized?: string[] | null
+        }
+      }
       applications: {
         Row: {
           id: string

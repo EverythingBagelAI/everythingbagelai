@@ -9,21 +9,25 @@ import { createClient } from "@/lib/supabase/server"
 import { notFound } from "next/navigation"
 import { Database } from "@/types/supabase"
 
+interface RedditComment {
+  text: string
+  sentiment: 'positive' | 'neutral' | 'negative'
+}
+
+interface RedditSentiment {
+  overallScore: number
+  breakdown: {
+    positive: number
+    neutral: number
+    negative: number
+  }
+  representativeComments: RedditComment[]
+}
+
 type Application = Database['public']['Tables']['applications']['Row'] & {
   categories: { name: string }
   sub_categories: { name: string } | null
-  reddit_sentiment?: {
-    overallScore: number
-    breakdown: {
-      positive: number
-      neutral: number
-      negative: number
-    }
-    representativeComments: Array<{
-      text: string
-      sentiment: 'positive' | 'neutral' | 'negative'
-    }>
-  }
+  reddit_sentiment?: RedditSentiment
   pricing_rating?: number
   functionality_rating?: number
   accessibility_rating?: number
@@ -241,7 +245,7 @@ export default async function ApplicationPage({ params }: { params: { id: string
             <div>
               <h3 className="mb-3 font-semibold">Representative Comments</h3>
               <div className="grid gap-3">
-                {redditSentiment.representativeComments.map((comment: any, index: number) => (
+                {redditSentiment.representativeComments.map((comment: RedditComment, index: number) => (
                   <div key={index} className="rounded-lg bg-muted p-4">
                     <p className="text-sm leading-relaxed">{comment.text}</p>
                     <Badge

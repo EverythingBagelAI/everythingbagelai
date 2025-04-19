@@ -5,6 +5,10 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Link from "next/link"
+import { Database } from "@/types/supabase"
+import { PostgrestError } from '@supabase/supabase-js'
+
+type DbAutomation = Database['public']['Tables']['automations']['Row']
 
 interface Application {
   id: string
@@ -13,27 +17,24 @@ interface Application {
   type: string
 }
 
-interface Automation {
-  id: string
-  name: string
-  creator: string | null
-  functionality: string | null
-  video_link: string | null
-  recipe: string | null
-  youtube_transcript: string | null
-  categories: { name: string }
-  sub_categories: { name: string }
-  applications: Application[]
-  category_id: string
+interface CategoryResult {
+  name: string | null
 }
 
-interface SimilarAutomation {
-  id: string
-  name: string
-  creator: string | null
-  functionality: string | null
-  categories: { name: string }
-  sub_categories: { name: string }
+interface AutomationWithJoins extends Omit<DbAutomation, 'categories' | 'sub_categories'> {
+  categories: CategoryResult
+  sub_categories: CategoryResult | null
+}
+
+interface Automation extends DbAutomation {
+  categories: CategoryResult
+  sub_categories: CategoryResult
+  applications: Application[]
+}
+
+interface SimilarAutomation extends DbAutomation {
+  categories: CategoryResult
+  sub_categories: CategoryResult
 }
 
 interface SupabaseAutomation {
@@ -45,10 +46,9 @@ interface SupabaseAutomation {
   sub_categories: { name: string }[]
 }
 
-async function getAutomation(id: string) {
+async function getAutomation(id: string): Promise<Automation> {
   const supabase = await createClient()
   
-  // First, get the automation with its categories
   const { data: automation, error } = await supabase
     .from("automations")
     .select(`
@@ -57,10 +57,7 @@ async function getAutomation(id: string) {
       sub_categories:sub_category_id(name)
     `)
     .eq("id", id)
-    .single()
-
-  console.log('Raw automation data:', automation)
-  console.log('Error if any:', error)
+    .single() as { data: AutomationWithJoins | null, error: PostgrestError | null }
 
   if (error || !automation) {
     throw new Error("Automation not found")
@@ -74,55 +71,42 @@ async function getAutomation(id: string) {
       .select("id, name, logo_url, type")
       .in("id", automation.applications_utilized)
 
-    console.log('Applications data:', appsData)
-    console.log('Applications error if any:', appsError)
-
     if (!appsError && appsData) {
       applications = appsData
     }
   }
 
-  // Construct the full automation object
-  const fullAutomation: Automation = {
-    id: automation.id,
-    name: automation.name,
-    creator: automation.creator,
-    functionality: automation.functionality,
-    video_link: automation.video_link,
-    recipe: automation.recipe,
-    youtube_transcript: automation.youtube_transcript,
-    categories: automation.categories,
-    sub_categories: automation.sub_categories,
-    applications: applications,
-    category_id: automation.category_id
+  return {
+    ...automation,
+    categories: { name: automation.categories?.name || 'Uncategorized' },
+    sub_categories: { name: automation.sub_categories?.name || 'None' },
+    applications
   }
-
-  console.log('Full automation object:', fullAutomation)
-  return fullAutomation
 }
 
-async function getRelatedAutomations(categoryId: string, currentId: string) {
+async function getRelatedAutomations(categoryId: string, currentId: string): Promise<SimilarAutomation[]> {
   const supabase = await createClient()
   const { data: automations, error } = await supabase
     .from("automations")
     .select(`
-      id,
-      name,
-      creator,
-      functionality,
+      *,
       categories:category_id(name),
       sub_categories:sub_category_id(name)
     `)
     .eq("category_id", categoryId)
     .neq("id", currentId)
-    .limit(3)
+    .limit(3) as { data: AutomationWithJoins[] | null, error: PostgrestError | null }
 
-  if (error) {
+  if (error || !automations) {
     console.error("Error fetching related automations:", error)
     return []
   }
 
-  return automations
+  return automations.map(automation => ({
+    ...automation,
+    categories: { name: automation.categories?.name || 'Uncategorized' },
+    sub_categories: { name: automation.sub_categories?.name || 'None' }
+  }))
 }
 
 export default async function AutomationPage({ params }: { params: { id: string } }) {
@@ -246,8 +230,8 @@ export default async function AutomationPage({ params }: { params: { id: string 
                         {similar.functionality}
                       </p>
                       <div className="flex flex-wrap gap-2">
-                        <Badge variant="secondary">{similar.categories?.[0]?.name || 'Uncategorized'}</Badge>
-                        <Badge variant="outline">{similar.sub_categories?.[0]?.name || 'None'}</Badge>
+                        <Badge variant="secondary">{similar.categories.name}</Badge>
+                        <Badge variant="outline">{similar.sub_categories.name}</Badge>
                       </div>
                     </div>
                   </CardContent>

@@ -14,7 +14,7 @@ export async function GET(request: Request) {
     const offset = (page - 1) * limit;
 
     const supabase = await createClient();
-    let { data, error, count } = await supabase
+    const { data, error, count } = await supabase
       .from('applications')
       .select('*', { count: 'exact' })
       .match(category ? { category } : {})
