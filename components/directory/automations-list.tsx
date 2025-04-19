@@ -20,18 +20,16 @@ interface Automation {
 
 export function AutomationsList() {
   const [automations, setAutomations] = useState<Automation[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [loading, setLoading] = useState(true)
   const searchParams = useSearchParams()
   const supabase = createClient()
+  const category = searchParams.get('category')
 
   useEffect(() => {
     async function fetchAutomations() {
-      setIsLoading(true)
+      setLoading(true)
       try {
-        const category = searchParams.get("category")
         const subCategory = searchParams.get("subCategory")
-        const search = searchParams.get("search")
-
         let query = supabase
           .from("automations")
           .select(`
@@ -59,14 +57,14 @@ export function AutomationsList() {
       } catch (error) {
         console.error("Error in fetchAutomations:", error)
       } finally {
-        setIsLoading(false)
+        setLoading(false)
       }
     }
 
     fetchAutomations()
-  }, [searchParams, supabase])
+  }, [category, supabase])
 
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="space-y-4">
         {Array.from({ length: 5 }).map((_, i) => (

@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Card, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
 
 const features = [
@@ -81,7 +81,6 @@ export default function ChatPage() {
                   <span className="text-2xl">{feature.emoji}</span>
                   <CardTitle className="text-lg">{feature.title}</CardTitle>
                 </div>
-                <CardDescription className="mt-2">{feature.description}</CardDescription>
               </CardHeader>
             </Link>
           </Card>
@@ -103,7 +102,6 @@ export default function ChatPage() {
                   <span className="text-2xl">{benefit.emoji}</span>
                   <CardTitle className="text-lg">{benefit.title}</CardTitle>
                 </div>
-                <CardDescription>{benefit.description}</CardDescription>
               </CardHeader>
             </Card>
           ))}

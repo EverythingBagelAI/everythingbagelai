@@ -7,7 +7,11 @@ export interface ConfettiRef {
   fire: () => void
 }
 
-export const Confetti = forwardRef<ConfettiRef>((_, ref) => {
+interface ConfettiProps {
+  className?: string
+}
+
+export const Confetti = forwardRef<ConfettiRef, ConfettiProps>(({ className }, ref) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useImperativeHandle(ref, () => ({
@@ -26,7 +30,7 @@ export const Confetti = forwardRef<ConfettiRef>((_, ref) => {
   return (
     <canvas
       ref={canvasRef}
-      className="pointer-events-none fixed inset-0 z-50"
+      className={className}
     />
   )
 })

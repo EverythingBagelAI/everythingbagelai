@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation"
 import { Bot } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { createClient } from "@/lib/supabase/client"
+import Image from 'next/image'
 
 interface Application {
   id: string
@@ -107,10 +108,12 @@ export function ApplicationsList() {
         >
           <div className="flex items-start gap-4 p-4">
             {app.logo_url ? (
-              <img
+              <Image
                 src={app.logo_url}
                 alt={app.name}
-                className="h-12 w-12 rounded-full"
+                width={32}
+                height={32}
+                className="h-8 w-8 rounded-full"
               />
             ) : (
               <Bot className="h-12 w-12 text-muted-foreground" />

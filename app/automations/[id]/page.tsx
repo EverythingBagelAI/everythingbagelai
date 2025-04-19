@@ -1,4 +1,4 @@
-import { Bot, ExternalLink, Youtube } from "lucide-react"
+import { Bot, Youtube } from "lucide-react"
 import { createClient } from "@/lib/supabase/server"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -35,15 +35,6 @@ interface Automation extends DbAutomation {
 interface SimilarAutomation extends DbAutomation {
   categories: CategoryResult
   sub_categories: CategoryResult
-}
-
-interface SupabaseAutomation {
-  id: string
-  name: string
-  creator: string | null
-  functionality: string | null
-  categories: { name: string }[]
-  sub_categories: { name: string }[]
 }
 
 async function getAutomation(id: string): Promise<Automation> {

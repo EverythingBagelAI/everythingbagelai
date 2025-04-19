@@ -78,10 +78,13 @@ export default function ConsultingPage() {
           Welcome to EverythingBagel AI Consulting <span className="inline-block">👋</span>
         </h1>
         <p className="mx-auto max-w-[900px] text-base text-muted-foreground">
-          Not every business needs to hire a data scientist or build an LLM from scratch. Sometimes, you just need the right tools, systems, and strategy — and that's where we come in.
+          Don&apos;t need extensive AI infrastructure? We&apos;ll help you find the right tools and strategies.
         </p>
         <p className="mx-auto max-w-[900px] text-base text-muted-foreground">
-          Whether you're just getting started with AI or looking to supercharge your existing workflows, we help you identify what's possible right now, then build automations and systems tailored to your business.
+          We&apos;ll help you understand AI&apos;s potential for your business.
+        </p>
+        <p className="mx-auto max-w-[900px] text-base text-muted-foreground">
+          We&apos;ll create personalized systems that bring leads to you.
         </p>
         <div className="mt-6">
           <Button variant="rainbow" size="lg" onClick={() => setShowConsultationForm(true)}>

@@ -1,13 +1,5 @@
 "use client"
 import * as React from "react"
-import { useRouter, useSearchParams } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { motion } from "framer-motion"
-
-interface Category {
-  id: string
-  name: string
-}
 
 interface SubCategory {
   id: string

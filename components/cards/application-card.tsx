@@ -3,6 +3,7 @@ import { Bot } from "lucide-react"
 import { Application } from "@/types"
 import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
+import Image from 'next/image'
 
 interface ApplicationCardProps {
   application: Application
@@ -16,10 +17,12 @@ export function ApplicationCard({ application }: ApplicationCardProps) {
           <div className="flex items-start justify-between gap-4">
             <div className="flex items-center gap-2">
               {application.logo_url ? (
-                <img
-                  src={application.logo_url}
-                  alt={application.name}
-                  className="h-8 w-8 rounded-full"
+                <Image
+                  src={application.logo_url || ""}
+                  alt={`${application.name} logo`}
+                  width={48}
+                  height={48}
+                  className="h-12 w-12 rounded-full"
                 />
               ) : (
                 <Bot className="h-8 w-8 text-muted-foreground" />

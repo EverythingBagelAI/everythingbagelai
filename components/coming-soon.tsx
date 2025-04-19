@@ -14,8 +14,8 @@ export function ComingSoon({ title, returnPath = "/" }: ComingSoonProps) {
           <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl">
             {title} <span className="inline-block">🚀</span>
           </h1>
-          <p className="text-xl text-muted-foreground">
-            We're building something awesome. Check back soon!
+          <p className="text-muted-foreground">
+            We&apos;re working hard to bring you something amazing.
           </p>
         </div>
         <div className="mt-4">

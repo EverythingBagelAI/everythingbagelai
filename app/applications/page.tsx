@@ -1,4 +1,3 @@
-import { Suspense } from "react"
 import { Shell } from "@/components/shell"
 import { ApplicationsClient } from "@/components/directory/applications-client"
 import { createClient } from "@/lib/supabase/server"
