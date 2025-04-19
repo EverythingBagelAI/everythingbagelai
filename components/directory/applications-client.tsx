@@ -5,8 +5,6 @@ import { Search } from "@/components/directory/search"
 import { ApplicationsGrid } from "@/components/directory/applications-grid"
 import { ApplicationsList } from "@/components/directory/applications-list"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Plus } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import {
   Select,
   SelectContent,
