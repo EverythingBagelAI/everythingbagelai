@@ -109,7 +109,7 @@ export default function ConsultingPage() {
       </BentoGrid>
 
       <div className="text-center text-muted-foreground">
-        <p className="text-sm">I'll build you a free custom AI system that saves you time or money — could be leads, content, chatbots, or internal automation. Just send me a 2-minute voice note explaining your workflow, and I'll take care of the rest.</p>
+        <p className="text-sm">I&apos;ll build you a free custom AI system that saves you time or money — could be leads, content, chatbots, or internal automation. Just send me a 2-minute voice note explaining your workflow, and I&apos;ll take care of the rest.</p>
       </div>
 
       <ConsultationForm 

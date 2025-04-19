@@ -18,31 +18,31 @@ const services = [
     id: "ai-strategy",
     title: "AI Strategy & Tool Advisory",
     description: "Understand what AI can actually do for your business",
-    offer: "I'll audit your current workflows and send you a free 1-page AI Tool Map showing which automations and tools could save you 10+ hours a week — tailored to your business."
+    offer: "I&apos;ll audit your current workflows and send you a free 1-page AI Tool Map showing which automations and tools could save you 10+ hours a week — tailored to your business."
   },
   {
     id: "lead-gen",
     title: "Hyper-Personalised Lead Generation",
-    description: "Build lead-gen machines that don't sound like spam",
-    offer: "Send me a list of your top 10 dream clients — I'll build and send you 3 fully personalised cold emails (plus the scraping method I used to find the data). Free. No strings. This demonstrates our scraping system, hyper-personalisation quality, and writing + strategy finesse."
+    description: "Build lead-gen machines that don&apos;t sound like spam",
+    offer: "Send me a list of your top 10 dream clients — I&apos;ll build and send you 3 fully personalised cold emails (plus the scraping method I used to find the data). Free. No strings. This demonstrates our scraping system, hyper-personalisation quality, and writing + strategy finesse."
   },
   {
     id: "sales-automation",
     title: "Sales & CRM Automations",
     description: "Turn your CRM into a closer, not just a tracker",
-    offer: "I'll set up 1 AI-powered follow-up sequence in your CRM for free — one that nurtures cold leads automatically using ChatGPT and past interaction data. Just tell me your CRM + one use case (e.g., ghosted demo leads)."
+    offer: "I&apos;ll set up 1 AI-powered follow-up sequence in your CRM for free — one that nurtures cold leads automatically using ChatGPT and past interaction data. Just tell me your CRM + one use case (e.g., ghosted demo leads)."
   },
   {
     id: "content-systems",
     title: "Content Systems",
     description: "Get a full-blown creative team in your pocket",
-    offer: "I'll give you a fully AI-generated content campaign brief (including ideas, hooks, competitor gap map, and 3 scripts) — completely free. Just tell me your niche or audience."
+    offer: "I&apos;ll give you a fully AI-generated content campaign brief (including ideas, hooks, competitor gap map, and 3 scripts) — completely free. Just tell me your niche or audience."
   },
   {
     id: "customer-support",
     title: "AI Customer Support",
     description: "Delight your customers without drowning in tickets",
-    offer: "I'll build you a free, branded AI chatbot demo trained on your FAQs and website. Just send me your website URL — I'll do the rest. See it work live with your tone, product, and support flow."
+    offer: "I&apos;ll build you a free, branded AI chatbot demo trained on your FAQs and website. Just send me your website URL — I&apos;ll do the rest. See it work live with your tone, product, and support flow."
   }
 ]
 
@@ -110,11 +110,11 @@ export function ConsultationForm({ isOpen, onClose }: ConsultationFormProps) {
                     Congratulations on Taking the First Step!
                   </h2>
                   <p className="text-lg text-muted-foreground">
-                    You're on your way to transforming your business with AI automation.
+                    You&apos;re on your way to transforming your business with AI automation.
                   </p>
                   <div className="space-y-2 text-muted-foreground">
                     <p>
-                      We'll review your requirements and get back to you within 24 hours with
+                      We&apos;ll review your requirements and get back to you within 24 hours with
                       a personalized plan for implementing AI solutions in your business.
                     </p>
                     <p>

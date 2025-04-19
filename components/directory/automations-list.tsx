@@ -62,7 +62,7 @@ export function AutomationsList() {
     }
 
     fetchAutomations()
-  }, [category, supabase])
+  }, [category, searchParams, supabase])
 
   if (loading) {
     return (
