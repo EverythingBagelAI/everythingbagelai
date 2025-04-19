@@ -56,5 +56,34 @@ export async function middleware(request: NextRequest) {
 
   await supabase.auth.getSession()
 
+  const url = request.nextUrl
+  const hostname = request.headers.get('host') || ''
+
+  // Handle consulting domain
+  if (hostname.includes('everythingbagelai.consulting')) {
+    // If not already on consulting page, redirect to consulting
+    if (!url.pathname.startsWith('/consulting')) {
+      return NextResponse.redirect(new URL('/consulting', request.url))
+    }
+  } else {
+    // On main domain, redirect consulting page visits to consulting domain
+    if (url.pathname.startsWith('/consulting')) {
+      return NextResponse.redirect(new URL(`https://everythingbagelai.consulting${url.pathname}`, request.url))
+    }
+  }
+
   return response
+}
+
+export const config = {
+  matcher: [
+    /*
+     * Match all paths except for:
+     * 1. /api routes
+     * 2. /_next (Next.js internals)
+     * 3. /_static (inside /public)
+     * 4. all root files inside /public (e.g. /favicon.ico)
+     */
+    '/((?!api|_next|_static|_vercel|[\\w-]+\\.\\w+).*)',
+  ],
 } 

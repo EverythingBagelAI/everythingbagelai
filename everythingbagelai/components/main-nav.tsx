@@ -10,28 +10,37 @@ export function MainNav() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 flex h-14 items-center border-b bg-background px-4">
       <div className="flex items-center gap-6 lg:gap-10">
-        <Link href="/" className="font-sans text-xl font-semibold text-blue-600">
+        <Link href="/" className="font-mono text-xl font-semibold gradient-text">
           EverythingBagelAI
         </Link>
       </div>
       <div className="ml-auto flex items-center space-x-6">
         <Link
-          href="/chat"
+          href="/tools/coming-soon"
           className={cn(
-            "font-sans text-sm font-medium transition-colors hover:text-blue-600",
-            pathname.startsWith("/chat") ? "text-blue-600" : "text-muted-foreground"
+            "font-mono text-sm transition-all hover:font-bold",
+            pathname.startsWith("/tools") ? "font-bold gradient-text" : "text-muted-foreground hover:gradient-text"
           )}
         >
-          Chat
+          Tools
         </Link>
         <Link
-          href="/directory"
+          href="/directory/coming-soon"
           className={cn(
-            "font-sans text-sm font-medium transition-colors hover:text-blue-600",
-            pathname.startsWith("/directory") ? "text-blue-600" : "text-muted-foreground"
+            "font-mono text-sm transition-all hover:font-bold",
+            pathname.startsWith("/directory") ? "font-bold gradient-text" : "text-muted-foreground hover:gradient-text"
           )}
         >
           Directory
+        </Link>
+        <Link
+          href="/consulting"
+          className={cn(
+            "font-mono text-sm transition-all hover:font-bold",
+            pathname.startsWith("/consulting") ? "font-bold gradient-text" : "text-muted-foreground hover:gradient-text"
+          )}
+        >
+          Consulting
         </Link>
       </div>
     </nav>

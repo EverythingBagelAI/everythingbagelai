@@ -1,0 +1,153 @@
+page,category,sub_category,app_name,url
+AI Apps,Major LLM Models,Enterprise & Commercial,OpenAI,https://openai.com
+AI Apps,Major LLM Models,Enterprise & Commercial,Claude,https://www.anthropic.com
+AI Apps,Major LLM Models,Enterprise & Commercial,Gemini,https://ai.google
+AI Apps,Major LLM Models,Enterprise & Commercial,Cohere,https://cohere.ai
+AI Apps,Major LLM Models,Research & Open-Source,Meta Llama 2,https://ai.meta.com/llama/
+AI Apps,Major LLM Models,Research & Open-Source,BLOOMZ,https://huggingface.co/bigscience
+AI Apps,Major LLM Models,Research & Open-Source,Falcon,https://falconllm.tii.ae
+AI Apps,Major LLM Models,Emerging Innovators,Mistral,https://www.mistral.ai
+AI Apps,Sales,Communication & Conversation Analytics,Gong.io,https://www.gong.io
+AI Apps,Sales,Communication & Conversation Analytics,Chorus.ai,https://www.chorus.ai
+AI Apps,Sales,Communication & Conversation Analytics,Troops,https://www.troops.ai
+AI Apps,Sales,AI Outreach & Engagement,Conversica,https://www.conversica.com
+AI Apps,Sales,AI Outreach & Engagement,Exceed.ai,https://www.exceed.ai
+AI Apps,Sales,AI Outreach & Engagement,People.ai,https://people.ai
+AI Apps,Sales,CRM & Data-Driven Sales Tools,Clay.io,https://clay.io
+AI Apps,Sales,CRM & Data-Driven Sales Tools,Salesforce Einstein,https://www.salesforce.com/products/einstein/overview/
+AI Apps,Sales,CRM & Data-Driven Sales Tools,Clari,https://www.clari.com
+AI Apps,Sales,CRM & Data-Driven Sales Tools,Lusha,https://www.lusha.com
+AI Apps,Marketing,Content & Copy Generation,Copy.ai,https://www.copy.ai
+AI Apps,Marketing,Content & Copy Generation,Jasper.ai,https://www.jasper.ai
+AI Apps,Marketing,Content & Copy Generation,Persado,https://www.persado.com
+AI Apps,Marketing,Content & Copy Generation,Phrasee,https://phrasee.co
+AI Apps,Marketing,Marketing Automation & Campaign Management,Blaze.ai,https://www.blaze.ai
+AI Apps,Marketing,Marketing Automation & Campaign Management,Albert.ai,https://albert.ai
+AI Apps,Marketing,Marketing Automation & Campaign Management,HubSpot Marketing Hub,https://www.hubspot.com/products/marketing
+AI Apps,Marketing,Marketing Analytics & Optimization,MarketMuse,https://www.marketmuse.com
+AI Apps,Marketing,Marketing Analytics & Optimization,Crayon,https://www.crayon.co
+AI Apps,Marketing,Marketing Analytics & Optimization,Acrolinx,https://www.acrolinx.com
+AI Apps,Content Creation,Video Creation & Editing,Invideo,https://invideo.io
+AI Apps,Content Creation,Video Creation & Editing,Pictory,https://pictory.ai
+AI Apps,Content Creation,Video Creation & Editing,Lumen5,https://lumen5.com
+AI Apps,Content Creation,Video Creation & Editing,Veed.io,https://www.veed.io
+AI Apps,Content Creation,Video Creation & Editing,Magisto,https://www.magisto.com
+AI Apps,Content Creation,Synthetic Media & Avatars,Synthesia,https://www.synthesia.io
+AI Apps,Content Creation,Synthetic Media & Avatars,RunwayML,https://runwayml.com
+AI Apps,Content Creation,Multimedia Content Platforms,Descript,https://www.descript.com
+AI Apps,Content Creation,Multimedia Content Platforms,Designs.ai,https://designs.ai
+AI Apps,Content Creation,Multimedia Content Platforms,Wibbitz,https://www.wibbitz.com
+AI Apps,Agents,Conversational Agents,Sintra,https://www.sintra.ai
+AI Apps,Agents,Autonomous Agents,Auto-GPT,https://autogpt.org
+AI Apps,Agents,Autonomous Agents,AgentGPT,https://agentgpt.reworkd.ai
+AI Apps,Agents,Autonomous Agents,BabyAGI,https://babyagi.io
+AI Apps,Agents,Automation Frameworks,Adept AI,https://www.adept.ai
+AI Apps,Agents,Automation Frameworks,SuperAGI,https://superagi.com
+AI Apps,Video/Image Generation,Artistic Image Generation,Midjourney,https://www.midjourney.com
+AI Apps,Video/Image Generation,Artistic Image Generation,Wombo Dream,https://www.wombo.art
+AI Apps,Video/Image Generation,Artistic Image Generation,Stable Diffusion,https://stability.ai
+AI Apps,Video/Image Generation,Artistic Image Generation,DALL-E 2,https://openai.com/dall-e-2
+AI Apps,Video/Image Generation,Professional Visual Design,Leonardo,https://www.leonardo.ai
+AI Apps,Video/Image Generation,Professional Visual Design,Luma Labs,https://lumalabs.ai
+AI Apps,Video/Image Generation,Dynamic Video Generation,Runway Gen-2,https://runwayml.com/gen-2
+AI Apps,Video/Image Generation,Dynamic Video Generation,Sora,https://sora.ai
+AI Apps,Accounting,Automated Bookkeeping Solutions,Botkeeper,https://www.botkeeper.com
+AI Apps,Accounting,Automated Bookkeeping Solutions,Pilot,https://www.pilot.com
+AI Apps,Accounting,Automated Bookkeeping Solutions,inDinero,https://www.indinero.com
+AI Apps,Accounting,Comprehensive Accounting Platforms,QuickBooks Online,https://quickbooks.intuit.com/online
+AI Apps,Accounting,Comprehensive Accounting Platforms,Xero,https://www.xero.com
+AI Apps,Accounting,Comprehensive Accounting Platforms,ScaleFactor,https://www.scalefactor.com
+AI Apps,Accounting,Comprehensive Accounting Platforms,Zoho Books,https://www.zoho.com/books
+AI Apps,Accounting,Expense & Transaction Management,Dext Prepare,https://www.dext.com
+AI Apps,Accounting,Expense & Transaction Management,Expensify,https://www.expensify.com
+AI Apps,Accounting,Expense & Transaction Management,OneUp,https://www.oneup.com
+AI Apps,Operations,Robotic Process Automation,UiPath,https://www.uipath.com
+AI Apps,Operations,Robotic Process Automation,Automation Anywhere,https://www.automationanywhere.com
+AI Apps,Operations,Robotic Process Automation,Blue Prism,https://www.blueprism.com
+AI Apps,Operations,Robotic Process Automation,Kryon,https://www.kryonsystems.com
+AI Apps,Operations,Process Mining & Analytics,Celonis,https://www.celonis.com
+AI Apps,Operations,Process Mining & Analytics,Arundo Analytics,https://www.arundo.com
+AI Apps,Operations,Workflow & Digital Automation,WorkFusion,https://www.workfusion.com
+AI Apps,Operations,Workflow & Digital Automation,Pega,https://www.pega.com
+AI Apps,Operations,Workflow & Digital Automation,Augmentir,https://www.augmentir.com
+AI Apps,Operations,Workflow & Digital Automation,Seebo,https://www.seebo.com
+AI Apps,Recruitment,Candidate Sourcing & CRM,HireEZ,https://hireez.com
+AI Apps,Recruitment,Candidate Sourcing & CRM,Loxo,https://loxo.co
+AI Apps,Recruitment,Candidate Sourcing & CRM,Fetcher,https://www.fetcher.ai
+AI Apps,Recruitment,Candidate Sourcing & CRM,Entelo,https://www.entelo.com
+AI Apps,Recruitment,Interview & Assessment Tools,HireVue,https://www.hirevue.com
+AI Apps,Recruitment,Interview & Assessment Tools,Pymetrics,https://www.pymetrics.com
+AI Apps,Recruitment,Interview & Assessment Tools,Vervoe,https://www.vervoe.com
+AI Apps,Recruitment,Recruitment Automation & AI Assistants,Popp,https://www.popp.ai
+AI Apps,Recruitment,Recruitment Automation & AI Assistants,Eightfold.ai,https://eightfold.ai
+AI Apps,Recruitment,Recruitment Automation & AI Assistants,Mya,https://www.mya.com
+AI Apps,AI Coding Platforms,Cloud IDE & Development Platforms,Cursor,https://www.cursor.so
+AI Apps,AI Coding Platforms,Cloud IDE & Development Platforms,Replit,https://replit.com
+AI Apps,AI Coding Platforms,Cloud IDE & Development Platforms,v0,https://v0.codes
+AI Apps,AI Coding Platforms,Cloud IDE & Development Platforms,Bolt.new,https://bolt.new
+AI Apps,AI Coding Platforms,AI Code Completion Tools,GitHub Copilot,https://github.com/features/copilot
+AI Apps,AI Coding Platforms,AI Code Completion Tools,Tabnine,https://www.tabnine.com
+AI Apps,AI Coding Platforms,AI Code Completion Tools,Codeium,https://www.codeium.com
+AI Apps,AI Coding Platforms,AI Code Completion Tools,Amazon CodeWhisperer,https://aws.amazon.com/codewhisperer
+AI Apps,AI Coding Platforms,Code Optimization & Automation,Windsurf,https://windsurf.dev
+AI Apps,AI Coding Platforms,Code Optimization & Automation,Sourcery,https://sourcery.ai
+AI Apps,Data Analytics & Business Intelligence,Data Visualization & Reporting,Tableau,https://www.tableau.com
+AI Apps,Data Analytics & Business Intelligence,Data Visualization & Reporting,Power BI,https://powerbi.microsoft.com
+AI Apps,Data Analytics & Business Intelligence,Data Visualization & Reporting,Looker,https://looker.com
+AI Apps,Data Analytics & Business Intelligence,Data Visualization & Reporting,Domo,https://www.domo.com
+AI Apps,Data Analytics & Business Intelligence,Advanced Analytics & BI,ThoughtSpot,https://www.thoughtspot.com
+AI Apps,Data Analytics & Business Intelligence,Advanced Analytics & BI,Sisense,https://www.sisense.com
+AI Apps,Data Analytics & Business Intelligence,Advanced Analytics & BI,Sigma Computing,https://www.sigmacomputing.com
+AI Apps,Data Analytics & Business Intelligence,Advanced Analytics & BI,Alteryx,https://www.alteryx.com
+AI Apps,Data Analytics & Business Intelligence,Automated ML & AI Analytics,DataRobot,https://www.datarobot.com
+AI Apps,Data Analytics & Business Intelligence,Automated ML & AI Analytics,Aito.ai,https://aito.ai
+AI Apps,eCommerce & Retail Automation,Personalization & Visual Merchandising,Vue.ai,https://vue.ai
+AI Apps,eCommerce & Retail Automation,Personalization & Visual Merchandising,Lily AI,https://www.lily.ai
+AI Apps,eCommerce & Retail Automation,Personalization & Visual Merchandising,Syte,https://syte.ai
+AI Apps,eCommerce & Retail Automation,Product Discovery & Search Optimization,Clerk.io,https://clerk.io
+AI Apps,eCommerce & Retail Automation,Product Discovery & Search Optimization,Doofinder,https://www.doofinder.com
+AI Apps,eCommerce & Retail Automation,Product Discovery & Search Optimization,Klevu,https://www.klevu.com
+AI Apps,eCommerce & Retail Automation,Product Discovery & Search Optimization,Findify,https://findify.io
+AI Apps,eCommerce & Retail Automation,Commerce Analytics & Optimization,Dynamic Yield,https://www.dynamicyield.com
+AI Apps,eCommerce & Retail Automation,Commerce Analytics & Optimization,Algopix,https://algopix.com
+AI Apps,eCommerce & Retail Automation,Commerce Analytics & Optimization,Nosto,https://www.nosto.com
+AI Apps,Customer Support & Experience,Multichannel Support Platforms,Zendesk,https://www.zendesk.com
+AI Apps,Customer Support & Experience,Multichannel Support Platforms,Freshdesk,https://freshdesk.com
+AI Apps,Customer Support & Experience,Multichannel Support Platforms,Helpshift,https://www.helpshift.com
+AI Apps,Customer Support & Experience,Conversational & Chatbot Solutions,Intercom,https://www.intercom.com
+AI Apps,Customer Support & Experience,Conversational & Chatbot Solutions,Ada Support,https://www.ada.support
+AI Apps,Customer Support & Experience,Conversational & Chatbot Solutions,Drift,https://www.drift.com
+AI Apps,Customer Support & Experience,Conversational & Chatbot Solutions,Boost.ai,https://boost.ai
+AI Apps,Customer Support & Experience,AI-Powered Customer Insights & Automation,DigitalGenius,https://www.digitalgenius.com
+AI Apps,Customer Support & Experience,AI-Powered Customer Insights & Automation,Solvvy,https://www.solvvy.com
+AI Apps,Customer Support & Experience,AI-Powered Customer Insights & Automation,Aisera,https://www.aisera.com
+AI Apps,Collaboration & Productivity Tools,Team Communication & Messaging,Slack,https://slack.com
+AI Apps,Collaboration & Productivity Tools,Team Communication & Messaging,Microsoft Teams,https://www.microsoft.com/en/microsoft-teams/group-chat-software
+AI Apps,Collaboration & Productivity Tools,Project Management & Workflow,Asana,https://asana.com
+AI Apps,Collaboration & Productivity Tools,Project Management & Workflow,Trello,https://trello.com
+AI Apps,Collaboration & Productivity Tools,Project Management & Workflow,Monday.com,https://monday.com
+AI Apps,Collaboration & Productivity Tools,Project Management & Workflow,ClickUp,https://clickup.com
+AI Apps,Collaboration & Productivity Tools,Collaboration & Documentation,Notion AI,https://www.notion.so/product/ai
+AI Apps,Collaboration & Productivity Tools,Collaboration & Documentation,Miro,https://miro.com
+AI Apps,Collaboration & Productivity Tools,Collaboration & Documentation,Coda,https://coda.io
+AI Apps,Collaboration & Productivity Tools,Collaboration & Documentation,Otter.ai,https://otter.ai
+AI Apps,Legal Automation,Legal Document & Contract Analysis,Casetext,https://casetext.com
+AI Apps,Legal Automation,Legal Document & Contract Analysis,Evisort,https://www.evisort.com
+AI Apps,Legal Automation,Legal Document & Contract Analysis,LegalSifter,https://www.legalsifter.com
+AI Apps,Legal Automation,Legal Document & Contract Analysis,Klarity,https://www.klaritylaw.com
+AI Apps,Legal Automation,Automated Legal Assistance,DoNotPay,https://donotpay.com
+AI Apps,Legal Automation,Automated Legal Assistance,Legal Robot,https://www.legalrobot.com
+AI Apps,Legal Automation,AI-Powered Legal Review & Compliance,LawGeex,https://www.lawgeex.com
+AI Apps,Legal Automation,AI-Powered Legal Review & Compliance,Luminance,https://www.luminance.com
+AI Apps,Legal Automation,AI-Powered Legal Review & Compliance,Ravn,https://www.ravn.ai
+AI Apps,Legal Automation,AI-Powered Legal Review & Compliance,ThoughtRiver,https://www.thoughtriver.com
+AI Apps,HR & Employee Engagement,Employee Engagement & Feedback,Culture Amp,https://www.cultureamp.com
+AI Apps,HR & Employee Engagement,Employee Engagement & Feedback,Officevibe,https://www.officevibe.com
+AI Apps,HR & Employee Engagement,Employee Engagement & Feedback,TinyPulse,https://www.tinypulse.com
+AI Apps,HR & Employee Engagement,Employee Engagement & Feedback,Bonusly,https://bonus.ly
+AI Apps,HR & Employee Engagement,Performance Management & Development,15Five,https://www.15five.com
+AI Apps,HR & Employee Engagement,Performance Management & Development,Betterworks,https://www.betterworks.com
+AI Apps,HR & Employee Engagement,Performance Management & Development,Lattice,https://lattice.com
+AI Apps,HR & Employee Engagement,People Analytics & Workforce Insights,Glint,https://www.glintinc.com
+AI Apps,HR & Employee Engagement,People Analytics & Workforce Insights,Peakon,https://www.peakon.com
+AI Apps,HR & Employee Engagement,People Analytics & Workforce Insights,Kazoo,https://www.kazoohr.com

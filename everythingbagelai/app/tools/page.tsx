@@ -7,25 +7,25 @@ const features = [
     emoji: "👨‍💻",
     title: "Code Assistant",
     description: "Get help with code review, debugging, optimization, and explanations",
-    href: "/chat/coding",
+    href: "/tools/coding",
   },
   {
     emoji: "🚀",
     title: "Automation Expert",
     description: "Design and troubleshoot automation workflows across various tools",
-    href: "/chat/automation",
+    href: "/tools/automation",
   },
   {
     emoji: "📝",
     title: "PRD Companion",
     description: "Create comprehensive product requirement documents with structured guidance",
-    href: "/chat/prd",
+    href: "/tools/prd",
   },
   {
     emoji: "🤖",
     title: "AI Applications Guide",
     description: "Navigate the AI landscape with personalized recommendations",
-    href: "/chat/ai-apps",
+    href: "/tools/ai-apps",
   },
 ]
 
@@ -52,20 +52,20 @@ const benefits = [
   },
 ]
 
-export default function ChatPage() {
+export default function ToolsPage() {
   return (
     <div className="container space-y-12 py-8">
       <div className="space-y-4 text-center">
         <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl">
-          Your Intelligent Chat Assistant <span className="inline-block animate-bounce">✨</span>
+          AI-Powered Tools <span className="inline-block animate-bounce">✨</span>
         </h1>
         <p className="mx-auto max-w-[700px] text-lg text-muted-foreground">
-          Specialized AI assistance across multiple domains, designed to enhance your productivity and
+          Specialized AI tools across multiple domains, designed to enhance your productivity and
           decision-making.
         </p>
         <div className="mt-6">
           <Button asChild variant="rainbow" size="lg">
-            <Link href="/chat/coding">
+            <Link href="/tools/coding">
               Get Started <span className="ml-2">✨</span>
             </Link>
           </Button>
@@ -93,7 +93,7 @@ export default function ChatPage() {
           <h2 className="text-2xl font-bold">
             Key Benefits <span className="inline-block">✨</span>
           </h2>
-          <p className="mt-2 text-muted-foreground">Why our chat assistant stands out</p>
+          <p className="mt-2 text-muted-foreground">Why our AI tools stand out</p>
         </div>
         <div className="grid gap-6 sm:grid-cols-2">
           {benefits.map((benefit) => (
@@ -111,5 +111,4 @@ export default function ChatPage() {
       </div>
     </div>
   );
-}
-
+} 

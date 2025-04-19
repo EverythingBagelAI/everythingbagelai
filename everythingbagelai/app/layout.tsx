@@ -1,34 +1,11 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Shell } from "@/components/shell";
 
-const geistSans = localFont({
-  src: [
-    {
-      path: "./fonts/GeistVF.woff",
-      weight: "100 900",
-      style: "normal",
-    },
-  ],
-  variable: "--font-geist-sans",
-  display: "swap",
-  preload: true,
-  fallback: ["system-ui", "sans-serif"],
-});
-
-const geistMono = localFont({
-  src: [
-    {
-      path: "./fonts/GeistMonoVF.woff",
-      weight: "100 900",
-      style: "normal",
-    },
-  ],
-  variable: "--font-geist-mono",
-  display: "swap",
-  preload: true,
-  fallback: ["monospace"],
+const jetBrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains-mono",
 });
 
 export const metadata: Metadata = {
@@ -43,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.className} ${geistSans.variable} ${geistMono.variable} min-h-screen bg-background antialiased`}>
+      <body className={`${jetBrainsMono.className} ${jetBrainsMono.variable} min-h-screen bg-background antialiased`}>
         <Shell>{children}</Shell>
       </body>
     </html>

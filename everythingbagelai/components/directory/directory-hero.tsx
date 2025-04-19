@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export function DirectoryHero() {
   return (
@@ -11,8 +12,8 @@ export function DirectoryHero() {
           <p className="mx-auto max-w-[700px] text-lg sm:text-xl text-muted-foreground">
             Explore our curated collection of AI applications and automation tools to supercharge your workflow.
           </p>
-          <Button size="lg" className="mt-6">
-            Explore Directory
+          <Button asChild variant="rainbow" size="lg" className="mt-6">
+            <Link href="/directory/applications">Explore Directory</Link>
           </Button>
         </div>
       </div>

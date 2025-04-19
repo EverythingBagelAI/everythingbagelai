@@ -1,4 +1,3 @@
-import { ArrowRight, Bot, Brain, Rocket, Search, Target, Zap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
@@ -7,17 +6,15 @@ const sections = [
   {
     title: "AI Applications",
     description: "Discover and compare cutting-edge AI tools and services",
-    icon: Bot,
-    href: "/directory/applications",
     emoji: "🤖",
+    href: "/directory/applications",
     features: ["Detailed reviews", "Feature comparisons", "Integration guides", "User ratings"],
   },
   {
     title: "Automations",
     description: "Explore ready-to-use automation workflows and templates",
-    icon: Rocket,
-    href: "/directory/automations",
     emoji: "⚡",
+    href: "/directory/automations",
     features: ["Step-by-step guides", "Tool compatibility", "Complexity ratings", "Community favorites"],
   },
 ]
@@ -55,6 +52,13 @@ export default function DirectoryPage() {
         <p className="mx-auto max-w-[700px] text-lg text-muted-foreground">
           Your curated gateway to the world of AI applications and automation solutions.
         </p>
+        <div className="mt-6">
+          <Button asChild variant="rainbow" size="lg">
+            <Link href="/directory/applications">
+              Explore Directory <span className="ml-2">→</span>
+            </Link>
+          </Button>
+        </div>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
@@ -63,17 +67,16 @@ export default function DirectoryPage() {
             <Link href={section.href}>
               <CardHeader>
                 <div className="flex items-center gap-2">
-                  <section.icon className="h-5 w-5" />
                   <span className="text-2xl">{section.emoji}</span>
+                  <CardTitle>{section.title}</CardTitle>
                 </div>
-                <CardTitle className="mt-4">{section.title}</CardTitle>
-                <CardDescription>{section.description}</CardDescription>
+                <CardDescription className="mt-2">{section.description}</CardDescription>
               </CardHeader>
               <CardContent>
                 <ul className="grid grid-cols-2 gap-2 text-sm">
                   {section.features.map((feature) => (
                     <li key={feature} className="flex items-center gap-2">
-                      <Target className="h-4 w-4 text-primary" />
+                      <span className="text-primary">→</span>
                       {feature}
                     </li>
                   ))}
@@ -95,26 +98,26 @@ export default function DirectoryPage() {
           <CardContent className="pt-6">
             <div className="grid gap-8 md:grid-cols-3">
               <div className="text-center">
-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                  <Search className="h-6 w-6 text-primary" />
+                <div className="mx-auto mb-4">
+                  <span className="text-3xl">🔍</span>
                 </div>
-                <h3 className="font-semibold">Browse & Filter</h3>
+                <h3 className="font-mono text-base">Browse & Filter</h3>
                 <p className="mt-2 text-sm text-muted-foreground">
                   Use our powerful filters to narrow down your search
                 </p>
               </div>
               <div className="text-center">
-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                  <Brain className="h-6 w-6 text-primary" />
+                <div className="mx-auto mb-4">
+                  <span className="text-3xl">🧠</span>
                 </div>
-                <h3 className="font-semibold">Compare & Evaluate</h3>
+                <h3 className="font-mono text-base">Compare & Evaluate</h3>
                 <p className="mt-2 text-sm text-muted-foreground">Review detailed ratings and user feedback</p>
               </div>
               <div className="text-center">
-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                  <Zap className="h-6 w-6 text-primary" />
+                <div className="mx-auto mb-4">
+                  <span className="text-3xl">⚡</span>
                 </div>
-                <h3 className="font-semibold">Implement & Integrate</h3>
+                <h3 className="font-mono text-base">Implement & Integrate</h3>
                 <p className="mt-2 text-sm text-muted-foreground">Follow our guides to get started quickly</p>
               </div>
             </div>
@@ -142,14 +145,6 @@ export default function DirectoryPage() {
             </Card>
           ))}
         </div>
-      </div>
-
-      <div className="text-center">
-        <Button asChild size="lg" className="animate-pulse">
-          <Link href="/directory/applications">
-            Explore Directory <ArrowRight className="ml-2 h-4 w-4" />
-          </Link>
-        </Button>
       </div>
     </div>
   )
