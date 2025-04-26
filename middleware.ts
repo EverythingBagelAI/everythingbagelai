@@ -13,19 +13,27 @@ export async function middleware(request: NextRequest) {
 
   const url = request.nextUrl
   const hostname = request.headers.get('host') || ''
-  const isConsultingDomain = hostname.includes('everythingbagelai.consulting')
-  const isMainDomain = hostname.includes('everythingbagelai.com') || hostname.includes('vercel.app')
+  
+  // Define the domains
+  const CONSULTING_DOMAIN = 'everythingbagelai.consulting'
+  const MAIN_DOMAIN = 'everythingbagelai.com'
+  const PREVIEW_DOMAIN = 'vercel.app'
+
+  // Check if we're on the consulting domain
+  const isConsultingDomain = hostname === CONSULTING_DOMAIN
+  const isMainDomain = hostname === MAIN_DOMAIN
+  const isPreviewDomain = hostname.endsWith(PREVIEW_DOMAIN)
 
   // Handle domain-specific routing
   if (isConsultingDomain) {
-    // If on consulting domain and not accessing consulting page, redirect to main domain
+    // If on consulting domain and not accessing consulting page, redirect to consulting page
     if (!url.pathname.startsWith('/consulting')) {
-      return NextResponse.redirect(new URL(`https://everythingbagelai.com${url.pathname}`, request.url))
+      return NextResponse.redirect(new URL('/consulting', request.url))
     }
-  } else if (isMainDomain) {
+  } else if (isMainDomain || isPreviewDomain) {
     // If on main domain and trying to access consulting, redirect to consulting domain
     if (url.pathname.startsWith('/consulting')) {
-      return NextResponse.redirect(new URL(`https://everythingbagelai.consulting${url.pathname}`, request.url))
+      return NextResponse.redirect(new URL(`https://${CONSULTING_DOMAIN}${url.pathname}`, request.url))
     }
   }
 
