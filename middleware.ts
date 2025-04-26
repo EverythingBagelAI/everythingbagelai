@@ -26,9 +26,9 @@ export async function middleware(request: NextRequest) {
 
   // Handle domain-specific routing
   if (isConsultingDomain) {
-    // If on consulting domain and not accessing consulting page, redirect to consulting page
+    // If on consulting domain and not accessing consulting page, redirect to main domain
     if (!url.pathname.startsWith('/consulting')) {
-      return NextResponse.redirect(new URL('/consulting', request.url))
+      return NextResponse.redirect(new URL(`https://${MAIN_DOMAIN}${url.pathname}`, request.url))
     }
   } else if (isMainDomain || isPreviewDomain) {
     // If on main domain and trying to access consulting, redirect to consulting domain
