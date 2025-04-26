@@ -15,12 +15,15 @@ export async function middleware(request: NextRequest) {
   const hostname = request.headers.get('host') || ''
   const isConsultingDomain = hostname.includes('everythingbagelai.consulting')
   const isMainDomain = hostname.includes('everythingbagelai.com') || hostname.includes('vercel.app')
+  
+  // Use preview URL until main domain is configured
+  const mainDomain = 'everythingbagelai-7jsdsw7vu-jordan-heaps-projects.vercel.app'
 
   // Handle domain-specific routing
   if (isConsultingDomain) {
     // If on consulting domain and not accessing consulting page, redirect to main domain
     if (!url.pathname.startsWith('/consulting')) {
-      return NextResponse.redirect(new URL(`https://everythingbagelai.com${url.pathname}`, request.url))
+      return NextResponse.redirect(new URL(`https://${mainDomain}${url.pathname}`, request.url))
     }
   } else if (isMainDomain) {
     // If on main domain and trying to access consulting, redirect to consulting domain
