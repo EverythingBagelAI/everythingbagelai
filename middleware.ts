@@ -16,17 +16,10 @@ export async function middleware(request: NextRequest) {
   const isConsultingDomain = hostname.includes('everythingbagelai.consulting')
   const isMainDomain = hostname.includes('everythingbagelai.com') || hostname.includes('vercel.app')
 
-  // Handle domain-specific routing only for initial/direct access
-  if (isConsultingDomain) {
-    // Only redirect to consulting if accessing the root path
-    if (url.pathname === '/') {
-      return NextResponse.redirect(new URL('/consulting', request.url))
-    }
-  } else if (isMainDomain) {
+  // Handle domain-specific routing only for the consulting page
+  if (isMainDomain && url.pathname.startsWith('/consulting')) {
     // If on main domain and trying to access consulting, redirect to consulting domain
-    if (url.pathname.startsWith('/consulting')) {
-      return NextResponse.redirect(new URL(`https://everythingbagelai.consulting${url.pathname}`, request.url))
-    }
+    return NextResponse.redirect(new URL(`https://everythingbagelai.consulting${url.pathname}`, request.url))
   }
 
   const response = NextResponse.next({
