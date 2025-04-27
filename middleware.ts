@@ -23,17 +23,25 @@ export async function middleware(request: NextRequest) {
   const isConsultingDomain = hostname === CONSULTING_DOMAIN
   const isMainDomain = hostname === MAIN_DOMAIN
   const isPreviewDomain = hostname.endsWith(PREVIEW_DOMAIN)
+  
+  // Determine if we're in development
+  const isDevelopment = process.env.NODE_ENV === 'development'
+  
+  // Get the protocol from the request or default to https in production
+  const protocol = isDevelopment ? 'http://' : 'https://'
 
   // Handle domain-specific routing
   if (isConsultingDomain) {
     // If on consulting domain and not accessing consulting page, redirect to main domain
     if (!url.pathname.startsWith('/consulting')) {
-      return NextResponse.redirect(new URL(`https://${MAIN_DOMAIN}${url.pathname}`, request.url))
+      // For preview domains, use the current request's protocol
+      const targetDomain = isPreviewDomain ? hostname : MAIN_DOMAIN
+      return NextResponse.redirect(new URL(`${protocol}${targetDomain}${url.pathname}`, request.url))
     }
   } else if (isMainDomain || isPreviewDomain) {
     // If on main domain and trying to access consulting, redirect to consulting domain
     if (url.pathname.startsWith('/consulting')) {
-      return NextResponse.redirect(new URL(`https://${CONSULTING_DOMAIN}${url.pathname}`, request.url))
+      return NextResponse.redirect(new URL(`${protocol}${CONSULTING_DOMAIN}${url.pathname}`, request.url))
     }
   }
 
