@@ -1,3 +1,5 @@
+"use client"
+
 import { AnimatedComingSoon } from "@/components/ui/animated-coming-soon"
 
 export default function ToolsPage() {
