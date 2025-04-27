@@ -1,5 +1,5 @@
-import { ComingSoon } from "@/components/coming-soon"
+import { AnimatedComingSoon } from "@/components/ui/animated-coming-soon"
 
 export default function ToolsPage() {
-  return <ComingSoon title="Tools Directory Coming Soon" />
+  return <AnimatedComingSoon title="AI Tools Directory Coming Soon" />
 } 
