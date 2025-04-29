@@ -16,24 +16,6 @@ export function MainNav() {
       </div>
       <div className="ml-auto flex items-center space-x-6">
         <Link
-          href="/tools"
-          className={cn(
-            "font-mono text-sm transition-all hover:font-bold",
-            pathname.startsWith("/tools") ? "font-bold gradient-text" : "text-muted-foreground hover:gradient-text"
-          )}
-        >
-          Tools
-        </Link>
-        <Link
-          href="/directory"
-          className={cn(
-            "font-mono text-sm transition-all hover:font-bold",
-            pathname.startsWith("/directory") ? "font-bold gradient-text" : "text-muted-foreground hover:gradient-text"
-          )}
-        >
-          Directory
-        </Link>
-        <Link
           href="/consulting"
           className={cn(
             "font-mono text-sm transition-all hover:font-bold",
