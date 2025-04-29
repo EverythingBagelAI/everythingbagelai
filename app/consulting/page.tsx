@@ -73,19 +73,24 @@ export default function ConsultingPage() {
 
   return (
     <div className="container space-y-12 py-8">
-      <div className="space-y-4 text-center">
-        <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl">
-          Welcome to EverythingBagel AI Consulting <span className="inline-block">👋</span>
-        </h1>
-        <p className="mx-auto max-w-[900px] text-base text-muted-foreground">
-          Don&apos;t need extensive AI infrastructure? We&apos;ll help you find the right tools and strategies.
+      <div className="space-y-6 text-center">
+        <div className="space-y-4">
+          <h2 className="text-2xl font-semibold tracking-tight text-muted-foreground">Not building an AI lab? No problem.</h2>
+          <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl">
+            We help you cut through the noise, pick the right tools, and put AI to work where it counts.
+          </h1>
+        </div>
+        
+        <div className="mx-auto max-w-[900px] space-y-3 text-lg text-muted-foreground">
+          <p>Understand where AI actually adds value to your business</p>
+          <p>Get smart systems that bring leads in — not more dashboards to manage</p>
+          <p>Build lightweight, effective automations without overcomplicating things</p>
+        </div>
+
+        <p className="text-xl font-medium">
+          Simple. Practical. Built around what you actually need.
         </p>
-        <p className="mx-auto max-w-[900px] text-base text-muted-foreground">
-          We&apos;ll help you understand AI&apos;s potential for your business.
-        </p>
-        <p className="mx-auto max-w-[900px] text-base text-muted-foreground">
-          We&apos;ll create personalized systems that bring leads to you.
-        </p>
+
         <div className="mt-6">
           <Button variant="rainbow" size="lg" onClick={() => setShowConsultationForm(true)}>
             Schedule Consultation <span className="ml-2">✨</span>
