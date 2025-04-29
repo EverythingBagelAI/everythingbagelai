@@ -5,22 +5,22 @@ import { Card } from '@/components/ui/card';
 const services = [
   {
     title: 'AI Strategy & Tool Advisory',
-    description: 'Expert guidance on selecting and implementing the right AI tools for your business.',
+    description: 'Cut through the noise. We\'ll help you pick, set up, and actually use the right AI tools for your business.',
     emoji: '🧠',
   },
   {
     title: 'Lead Generation',
-    description: 'AI-powered systems that find and engage your ideal prospects 24/7.',
+    description: 'AI systems that find and engage the right people — while you sleep.',
     emoji: '🎯',
   },
   {
     title: 'Sales Automation',
-    description: 'Transform your CRM into an intelligent system that nurtures and closes deals.',
+    description: 'Turn your CRM into a machine that chases leads, nurtures them, and closes deals without you babysitting it.',
     emoji: '💼',
   },
   {
     title: 'Content Creation',
-    description: 'Get a full AI creative team that generates engaging content across all channels.',
+    description: 'Your AI creative team — generating solid content across all your channels without the usual fluff.',
     emoji: '✍️',
   },
 ];
@@ -30,10 +30,13 @@ export default function Home() {
     <div className="container space-y-12 py-8">
       <div className="space-y-4 text-center">
         <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl">
-          AI That Actually Does Stuff — No Nerd Squad Required <span className="inline-block">✨</span>
+          Tools That Automate. Systems That Scale. <span className="inline-block">✨</span>
         </h1>
         <p className="mx-auto max-w-[700px] text-lg text-muted-foreground">
-          From custom automations to smart tools and strategy, we make AI work for your business (not the other way around).
+          Custom automations, smart tools, real strategy.
+        </p>
+        <p className="mx-auto max-w-[700px] text-lg text-muted-foreground">
+          We make AI work for you — not the other way around.
         </p>
         <div className="flex justify-center gap-4">
           <Button asChild variant="rainbow" size="lg">
@@ -61,12 +64,11 @@ export default function Home() {
 
       <div className="mx-auto max-w-[700px] space-y-4 text-center text-muted-foreground">
         <p>
-          We help businesses leverage AI effectively through expert consulting and implementation.
-          Our team specializes in creating custom AI solutions that automate workflows, generate
-          leads, and scale your operations.
+          We don\'t just recommend AI — we build systems that actually do something.
+          From automation to lead gen to content, we make AI part of how your business works — not just a shiny add-on.
         </p>
         <p className="text-sm">
-          Join the businesses already transforming their operations with EverythingBagel AI.
+          Join the businesses already scaling smarter with EverythingBagel AI.
         </p>
       </div>
     </div>
