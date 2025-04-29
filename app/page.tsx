@@ -5,7 +5,7 @@ import { Card } from '@/components/ui/card';
 const services = [
   {
     title: 'AI Strategy & Tool Advisory',
-    description: 'Cut through the noise. We\'ll help you pick, set up, and actually use the right AI tools for your business.',
+    description: 'Cut through the noise. We&apos;ll help you pick, set up, and actually use the right AI tools for your business.',
     emoji: '🧠',
   },
   {
@@ -64,7 +64,7 @@ export default function Home() {
 
       <div className="mx-auto max-w-[700px] space-y-4 text-center text-muted-foreground">
         <p>
-          We don\'t just recommend AI — we build systems that actually do something.
+          We don&apos;t just recommend AI — we build systems that actually do something.
           From automation to lead gen to content, we make AI part of how your business works — not just a shiny add-on.
         </p>
         <p className="text-sm">
