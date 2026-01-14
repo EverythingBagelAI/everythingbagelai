@@ -1,76 +1,123 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-
-const services = [
-  {
-    title: 'AI Strategy & Tool Advisory',
-    description: 'Cut through the noise. We&apos;ll help you pick, set up, and actually use the right AI tools for your business.',
-    emoji: '🧠',
-  },
-  {
-    title: 'Lead Generation',
-    description: 'AI systems that find and engage the right people — while you sleep.',
-    emoji: '🎯',
-  },
-  {
-    title: 'Sales Automation',
-    description: 'Turn your CRM into a machine that chases leads, nurtures them, and closes deals without you babysitting it.',
-    emoji: '💼',
-  },
-  {
-    title: 'Content Creation',
-    description: 'Your AI creative team — generating solid content across all your channels without the usual fluff.',
-    emoji: '✍️',
-  },
-];
+import { AuroraBackground } from '@/components/ui/aurora-background';
+import { StatsBar } from '@/components/sections/stats-bar';
+import { Advantages } from '@/components/sections/advantages';
+import { ServicesShowcase } from '@/components/sections/services-showcase';
+import { HowItWorks } from '@/components/sections/how-it-works';
+import { TechnologyStack } from '@/components/sections/technology-stack';
+import { ResultsShowcase } from '@/components/sections/results-showcase';
+import { FAQ } from '@/components/sections/faq';
+import { FinalCTA } from '@/components/sections/final-cta';
 
 export default function Home() {
   return (
-    <div className="container space-y-12 py-8">
-      <div className="space-y-4 text-center">
-        <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl">
-          Tools That Automate. Systems That Scale. <span className="inline-block">✨</span>
-        </h1>
-        <p className="mx-auto max-w-[700px] text-lg text-muted-foreground">
-          Custom automations, smart tools, real strategy.
-        </p>
-        <p className="mx-auto max-w-[700px] text-lg text-muted-foreground">
-          We make AI work for you — not the other way around.
-        </p>
-        <div className="flex justify-center gap-4">
-          <Button asChild variant="rainbow" size="lg">
-            <Link href="/consulting">Get Started <span className="ml-2">→</span></Link>
-          </Button>
+    <>
+      {/* Enhanced Hero Section */}
+      <section className="snap-start snap-always w-screen">
+        <AuroraBackground className="h-screen">
+          <div className="relative z-10 text-center max-w-6xl mx-auto space-y-8 px-4">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tighter animate-fade-in-up">
+              Build <span className="gradient-text">AI Systems</span>
+              <br />
+              That Actually Work
+            </h1>
+
+            <p
+              className="text-xl sm:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed animate-fade-in-up"
+              style={{ animationDelay: '150ms' }}
+            >
+              From strategy to implementation in weeks. No hype, just results.
+            </p>
+
+            <div
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up"
+              style={{ animationDelay: '300ms' }}
+            >
+              <Button
+                asChild
+                variant="rainbow"
+                size="lg"
+                className="text-lg px-8 py-6 hover:scale-105 transition-transform"
+              >
+                <Link href="/consulting">
+                  Start Your AI Journey <span className="ml-2">→</span>
+                </Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="text-lg px-8 py-6 hover:scale-105 transition-transform"
+              >
+                <a href="#how-it-works">See How It Works</a>
+              </Button>
+            </div>
+
+            <p
+              className="text-sm text-muted-foreground animate-fade-in-up"
+              style={{ animationDelay: '450ms' }}
+            >
+              Trusted by 100+ growing businesses
+            </p>
+          </div>
+        </AuroraBackground>
+      </section>
+
+      {/* Stats Bar */}
+      <section className="relative min-h-screen snap-start snap-always flex items-center justify-center py-20">
+        <StatsBar />
+      </section>
+
+      {/* Advantages */}
+      <section className="relative min-h-screen snap-start snap-always flex items-center justify-center py-20">
+        <Advantages />
+      </section>
+
+      {/* Services Showcase - Part 1 */}
+      <section className="relative min-h-screen snap-start snap-always flex items-center justify-center py-16">
+        <div className="w-full">
+          <div className="text-center mb-6">
+            <h2 className="text-3xl lg:text-4xl font-bold mb-2">
+              Our <span className="gradient-text">Services</span>
+            </h2>
+            <p className="text-base text-muted-foreground max-w-2xl mx-auto">
+              Comprehensive AI solutions tailored to your business needs
+            </p>
+          </div>
+          <ServicesShowcase serviceIndices={[0, 1]} />
         </div>
-      </div>
+      </section>
 
-      <div className="grid gap-4 sm:grid-cols-2 max-w-4xl mx-auto">
-        {services.map((service) => (
-          <Card
-            key={service.title}
-            className="flex flex-col items-start gap-2 p-6 transition-colors hover:bg-muted/50"
-          >
-            <Link href="/consulting" className="w-full">
-              <div className="flex items-center gap-2">
-                <span className="text-2xl">{service.emoji}</span>
-                <h3 className="font-semibold">{service.title}</h3>
-              </div>
-              <p className="mt-2 text-muted-foreground">{service.description}</p>
-            </Link>
-          </Card>
-        ))}
-      </div>
+      {/* Services Showcase - Part 2 */}
+      <section className="relative min-h-screen snap-start snap-always flex items-center justify-center py-16">
+        <ServicesShowcase serviceIndices={[2, 3]} />
+      </section>
 
-      <div className="mx-auto max-w-[700px] space-y-4 text-center text-muted-foreground">
-        <p>
-          We don&apos;t just recommend AI — we build systems that actually do something.
-          From automation to lead gen to content, we make AI part of how your business works — not just a shiny add-on.
-        </p>
-        <p className="text-sm">
-          Join the businesses already scaling smarter with EverythingBagel AI.
-        </p>
-      </div>
-    </div>
+      {/* How It Works */}
+      <section id="how-it-works" className="relative min-h-screen snap-start snap-always flex items-center justify-center py-20">
+        <HowItWorks />
+      </section>
+
+      {/* Technology Stack */}
+      <section className="relative min-h-screen snap-start snap-always flex items-center justify-center py-20">
+        <TechnologyStack />
+      </section>
+
+      {/* Results Showcase */}
+      <section className="relative min-h-screen snap-start snap-always flex items-center justify-center py-20">
+        <ResultsShowcase />
+      </section>
+
+      {/* FAQ */}
+      <section className="relative min-h-screen snap-start snap-always flex items-center justify-center py-12">
+        <FAQ />
+      </section>
+
+      {/* Final CTA */}
+      <section className="relative min-h-screen snap-start snap-always flex items-center justify-center py-20">
+        <FinalCTA />
+      </section>
+    </>
   );
 }

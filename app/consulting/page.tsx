@@ -1,126 +1,142 @@
 "use client"
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { ConsultationForm } from "@/components/consultation-form"
-import { BentoGrid, BentoCard } from "@/components/ui/bento-grid"
+import { BookingForm } from "@/components/booking-form"
+import { motion, useInView } from "framer-motion"
+import { useRef } from "react"
 
-const services = [
-  {
-    emoji: "🧠",
-    title: "AI Strategy & Tool Advisory",
-    description: "Confused by all the AI hype? We cut through the noise.",
-    features: [
-      "Understand what AI can actually do for your business",
-      "Discover tools that match your goals and budget",
-      "Avoid shiny-object syndrome by focusing on ROI-driven solutions"
-    ],
-    offer: "I'll audit your current workflows and send you a free 1-page AI Tool Map showing which automations and tools could save you 10+ hours a week — tailored to your business. Just send me a quick voice note or Loom walking through what you do day-to-day.",
-    className: "w-full"
-  },
-  {
-    emoji: "🎯",
-    title: "Hyper-Personalised Lead Generation",
-    description: "We build lead-gen machines that don't sound like spam.",
-    features: [
-      "Smart scraping to find your ideal prospects",
-      "AI-powered personalisation (no two messages are alike)",
-      "Automated outreach systems that run 24/7"
-    ],
-    offer: "Send me a list of your top 10 dream clients — I'll build and send you 3 fully personalised cold emails (plus the scraping method I used to find the data). Free. No strings. This demonstrates our scraping system, hyper-personalisation quality, and writing + strategy finesse.",
-    className: "w-full"
-  },
-  {
-    emoji: "🛠️",
-    title: "Sales & CRM Automations",
-    description: "Turn your CRM into a closer, not just a tracker.",
-    features: [
-      "AI-written follow-ups based on conversation history",
-      "Lead nurturing flows tailored to each stage of your funnel",
-      "Deal tracking systems that surface warm leads automatically"
-    ],
-    offer: "I'll set up 1 AI-powered follow-up sequence in your CRM for free — one that nurtures cold leads automatically using ChatGPT and past interaction data. Just tell me your CRM + one use case (e.g., ghosted demo leads).",
-    className: "w-full"
-  },
-  {
-    emoji: "🎥",
-    title: "Content Systems",
-    description: "Content is king — we give you a full-blown creative team in your pocket.",
-    features: [
-      "Generating brand avatars (visual + tone of voice)",
-      "Mapping what your competitors are posting — and where you can stand out",
-      "Generating ideas, outlines, and scripts for video, social, email, or blog"
-    ],
-    offer: "I'll give you a fully AI-generated content campaign brief (including ideas, hooks, competitor gap map, and 3 scripts) — completely free. Just tell me your niche or audience. Perfect for founders, personal brands, creators, or agencies.",
-    className: "w-full"
-  },
-  {
-    emoji: "🤖",
-    title: "AI Customer Support",
-    description: "Delight your customers without drowning in tickets.",
-    features: [
-      "AI-powered chatbots that actually help (not frustrate)",
-      "AI agents that triage, escalate, and resolve tickets",
-      "Systems that get smarter over time by learning from past interactions"
-    ],
-    offer: "I'll build you a free, branded AI chatbot demo trained on your FAQs and website. Just send me your website URL — I'll do the rest. See it work live with your tone, product, and support flow.",
-    className: "w-full"
-  }
-]
+export default function BookingPage() {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: "-100px" })
 
-export default function ConsultingPage() {
-  const [showConsultationForm, setShowConsultationForm] = useState(false)
+  const trustBadges = [
+    { icon: "⚡", text: "30-Min Free Call" },
+    { icon: "📅", text: "Flexible Scheduling" },
+    { icon: "✉️", text: "Response in 24h" },
+    { icon: "🎯", text: "Custom Solutions" }
+  ]
 
   return (
-    <div className="container space-y-12 py-8">
-      <div className="space-y-6 text-center">
-        <div className="space-y-4">
-          <h2 className="text-2xl font-semibold tracking-tight text-muted-foreground">Not building an AI lab? No problem.</h2>
-          <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl">
-            We help you cut through the noise, pick the right tools, and put AI to work where it counts.
-          </h1>
-        </div>
-        
-        <div className="mx-auto max-w-[900px] space-y-3 text-lg text-muted-foreground">
-          <p>Understand where AI actually adds value to your business</p>
-          <p>Get smart systems that bring leads in — not more dashboards to manage</p>
-          <p>Build lightweight, effective automations without overcomplicating things</p>
-        </div>
-
-        <p className="text-xl font-medium">
-          Simple. Practical. Built around what you actually need.
-        </p>
-
-        <div className="mt-6">
-          <Button variant="rainbow" size="lg" onClick={() => setShowConsultationForm(true)}>
-            Schedule Consultation <span className="ml-2">✨</span>
-          </Button>
+    <div className="h-[calc(100vh-3.5rem)] relative overflow-hidden">
+      {/* Animated Gradient Background */}
+      <div className="fixed inset-0 -z-10">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-50 via-pink-50 to-cyan-50" />
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-0 -left-4 w-96 h-96 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
+          <div className="absolute top-0 -right-4 w-96 h-96 bg-pink-400 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000" />
+          <div className="absolute -bottom-8 left-20 w-96 h-96 bg-cyan-400 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000" />
+          <div className="absolute bottom-8 right-20 w-96 h-96 bg-indigo-400 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-6000" />
         </div>
       </div>
 
-      <BentoGrid>
-        {services.map((service) => (
-          <BentoCard
-            key={service.title}
-            emoji={service.emoji}
-            name={service.title}
-            description={service.description}
-            features={service.features}
-            offer={service.offer}
-            className={service.className}
-            onClick={() => setShowConsultationForm(true)}
-          />
-        ))}
-      </BentoGrid>
+      <div className="container max-w-7xl mx-auto px-4 h-full flex items-center" ref={ref}>
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center w-full">
+          {/* Left Column - Hero Content */}
+          <motion.div
+            className="space-y-5"
+            initial={{ opacity: 0, x: -50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+            transition={{ duration: 0.8 }}
+          >
+            {/* Header */}
+            <div className="space-y-4">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                <span className="inline-block px-3 py-1 rounded-full bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 text-xs font-semibold gradient-text">
+                  Free Consultation
+                </span>
+              </motion.div>
 
-      <div className="text-center text-muted-foreground">
-        <p className="text-sm">I&apos;ll build you a free custom AI system that saves you time or money — could be leads, content, chatbots, or internal automation. Just send me a 2-minute voice note explaining your workflow, and I&apos;ll take care of the rest.</p>
+              <motion.h1
+                className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+              >
+                Let's Build Something
+                <span className="block gradient-text">Extraordinary</span>
+              </motion.h1>
+
+              <motion.p
+                className="text-base text-muted-foreground leading-relaxed"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+              >
+                Book a free 30-minute consultation to discuss how AI can transform your business.
+                No sales pitch, just honest advice and a clear roadmap.
+              </motion.p>
+            </div>
+
+            {/* Trust Badges */}
+            <motion.div
+              className="grid grid-cols-2 gap-3"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+            >
+              {trustBadges.map((badge, index) => (
+                <motion.div
+                  key={badge.text}
+                  className="flex items-center gap-2 p-3 rounded-xl bg-white/60 backdrop-blur-md border border-white/40 shadow-lg"
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <span className="text-xl">{badge.icon}</span>
+                  <span className="text-xs font-semibold">{badge.text}</span>
+                </motion.div>
+              ))}
+            </motion.div>
+
+            {/* What to Expect */}
+            <motion.div
+              className="space-y-2 p-4 rounded-2xl bg-white/40 backdrop-blur-md border border-white/60"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+            >
+              <h3 className="text-sm font-bold">What to Expect on the Call</h3>
+              <ul className="space-y-1.5">
+                {[
+                  "Deep dive into your workflows and pain points",
+                  "Identify quick wins for immediate impact",
+                  "Get a custom roadmap with clear next steps"
+                ].map((item, index) => (
+                  <motion.li
+                    key={item}
+                    className="flex items-start gap-2 text-xs text-muted-foreground"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                    transition={{ duration: 0.4, delay: 0.7 + index * 0.1 }}
+                  >
+                    <span className="text-green-500 mt-0.5">✓</span>
+                    <span>{item}</span>
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
+          </motion.div>
+
+          {/* Right Column - Form */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            <div className="p-6 rounded-3xl bg-white/80 backdrop-blur-xl border border-white/60 shadow-2xl max-h-[calc(100vh-8rem)] overflow-y-auto">
+              <div className="space-y-1 mb-4">
+                <h2 className="text-xl font-bold">Book Your Call</h2>
+                <p className="text-xs text-muted-foreground">
+                  Fill out the form below and we'll get back to you within 24 hours.
+                </p>
+              </div>
+              <BookingForm />
+            </div>
+          </motion.div>
+        </div>
       </div>
-
-      <ConsultationForm 
-        isOpen={showConsultationForm} 
-        onClose={() => setShowConsultationForm(false)} 
-      />
     </div>
   )
-} 
+}

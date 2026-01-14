@@ -93,26 +93,26 @@ export function ConsultationForm({ isOpen, onClose }: ConsultationFormProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <Confetti ref={confettiRef} className="fixed inset-0 pointer-events-none" />
-      <DialogContent className="sm:max-w-[600px] overflow-hidden border-0 p-0">
+      <DialogContent className="sm:max-w-[600px] max-h-[85vh] overflow-y-auto border-0 p-0">
         <div className="border-beam">
-          <div className="bg-background p-6">
-            <div className="space-y-8">
+          <div className="bg-background p-4 sm:p-6">
+            <div className="space-y-4">
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Schedule a Consultation</h2>
-                <p className="text-muted-foreground">
+                <p className="text-sm text-muted-foreground">
                   Let&apos;s discuss how we can help your business leverage AI effectively.
                 </p>
               </div>
               {showSuccess ? (
-                <div className="p-8 text-center space-y-4">
-                  <div className="text-4xl mb-4">🎉</div>
-                  <h2 className="text-2xl font-bold gradient-text">
+                <div className="p-6 text-center space-y-3">
+                  <div className="text-4xl mb-2">🎉</div>
+                  <h2 className="text-xl font-bold gradient-text">
                     Congratulations on Taking the First Step!
                   </h2>
-                  <p className="text-lg text-muted-foreground">
+                  <p className="text-base text-muted-foreground">
                     You&apos;re on your way to transforming your business with AI automation.
                   </p>
-                  <div className="space-y-2 text-muted-foreground">
+                  <div className="space-y-2 text-sm text-muted-foreground">
                     <p>
                       We&apos;ll review your requirements and get back to you within 24 hours with
                       a personalized plan for implementing AI solutions in your business.
@@ -121,14 +121,14 @@ export function ConsultationForm({ isOpen, onClose }: ConsultationFormProps) {
                       Get ready to streamline your operations and unlock new possibilities!
                     </p>
                   </div>
-                  <div className="mt-6 text-sm text-muted-foreground">
+                  <div className="mt-4 text-sm text-muted-foreground">
                     Redirecting you shortly...
                   </div>
                 </div>
               ) : (
                 <div>
-                  <form onSubmit={handleSubmit} className="space-y-8">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <label className="block text-sm font-medium" htmlFor="name">
                           Name
@@ -184,38 +184,45 @@ export function ConsultationForm({ isOpen, onClose }: ConsultationFormProps) {
                         />
                       </div>
                     </div>
-                    <div className="space-y-4">
+                    <div className="space-y-3">
                       <label className="block text-sm font-medium">
                         Services of Interest (Select all that apply)
                       </label>
-                      <div className="grid gap-3">
+                      <div className="grid gap-2 max-h-[200px] overflow-y-auto pr-2">
                         {services.map((service) => (
-                          <div key={service.id} className="relative flex items-start space-x-3 rounded-lg border p-4 hover:bg-muted/50 transition-colors">
-                            <div className="flex h-6 items-center">
+                          <div key={service.id} className="relative flex items-start space-x-3 rounded-lg border p-3 hover:bg-muted/50 transition-colors">
+                            <div className="flex h-5 items-center">
                               <input
                                 type="checkbox"
                                 id={service.id}
                                 checked={formData.services.includes(service.id)}
                                 onChange={(e) => {
                                   if (e.target.checked) {
-                                    setFormData(prev => ({
-                                      ...prev,
-                                      services: [...prev.services, service.id]
-                                    }))
+                                    setFormData({
+                                      ...formData,
+                                      services: [...formData.services, service.id],
+                                    })
                                   } else {
-                                    setFormData(prev => ({
-                                      ...prev,
-                                      services: prev.services.filter(id => id !== service.id)
-                                    }))
+                                    setFormData({
+                                      ...formData,
+                                      services: formData.services.filter((id) => id !== service.id),
+                                    })
                                   }
                                 }}
                                 className="custom-checkbox"
                               />
                             </div>
-                            <label htmlFor={service.id} className="flex-1 cursor-pointer">
-                              <div className="font-medium">{service.title}</div>
-                              <div className="text-sm text-muted-foreground">{service.description}</div>
-                            </label>
+                            <div className="min-w-0 flex-1">
+                              <label
+                                htmlFor={service.id}
+                                className="text-sm font-medium cursor-pointer"
+                              >
+                                {service.title}
+                              </label>
+                              <p className="text-xs text-muted-foreground">
+                                {service.description}
+                              </p>
+                            </div>
                           </div>
                         ))}
                       </div>
@@ -229,34 +236,21 @@ export function ConsultationForm({ isOpen, onClose }: ConsultationFormProps) {
                         placeholder="Tell us more about your specific needs..."
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                        required
-                        className="min-h-[100px] relative z-20"
+                        className="h-24 relative z-20"
                       />
                     </div>
-                    <div className="flex justify-center relative z-20">
-                      <div className="bg-background p-2 rounded-lg">
-                        <RecaptchaWrapper
-                          sitekey={RECAPTCHA_SITE_KEY}
-                          onChange={handleRecaptchaChange}
-                        />
-                      </div>
-                    </div>
-                    <div className="flex justify-end gap-4">
-                      <Button variant="outline" type="button" onClick={onClose}>
-                        Cancel
-                      </Button>
-                      <Button 
-                        type="submit" 
-                        variant="rainbow" 
-                        disabled={!isVerified}
-                      >
-                        Submit <span className="ml-2">✨</span>
+                    <div className="space-y-4">
+                      <RecaptchaWrapper sitekey={RECAPTCHA_SITE_KEY} onChange={handleRecaptchaChange} />
+                      <Button type="submit" variant="rainbow" className="w-full" disabled={!isVerified}>
+                        Schedule Consultation <span className="ml-2">✨</span>
                       </Button>
                     </div>
                   </form>
-                  <p className="text-sm text-muted-foreground">
-                    We&apos;ll get back to you within 24 hours.
-                  </p>
+                  <div className="mt-6 pt-4 border-t text-center">
+                    <p className="text-sm text-muted-foreground">
+                      We&apos;ll get back to you within 24 hours with a personalized plan.
+                    </p>
+                  </div>
                 </div>
               )}
             </div>

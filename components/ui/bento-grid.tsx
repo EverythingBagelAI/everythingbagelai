@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils"
-import { useState } from "react"
 import { Button } from "@/components/ui/button"
+import { CheckIcon } from "@heroicons/react/24/outline"
+import { GlowingEffect } from "@/components/ui/glowing-effect"
 
 interface BentoGridProps {
   className?: string
@@ -15,89 +16,73 @@ export function BentoGrid({ className, children }: BentoGridProps) {
   )
 }
 
-interface BentoCardProps {
-  className?: string
-  Icon?: React.ElementType
-  name: string
+interface BentoCardProps extends React.HTMLAttributes<HTMLDivElement> {
+  emoji: string
+  title: string
   description: string
-  features?: string[]
-  emoji?: string
-  offer?: string
+  features: string[]
+  className?: string
   onClick?: () => void
 }
 
-export function BentoCard({
-  className,
-  Icon,
-  name,
+export const BentoCard = ({
+  emoji,
+  title,
   description,
   features,
-  emoji,
-  offer,
+  className,
   onClick,
-}: BentoCardProps) {
-  const [isExpanded, setIsExpanded] = useState(false)
-
+  ...props
+}: BentoCardProps) => {
   return (
-    <div
-      className={cn(
-        "group relative overflow-hidden rounded-lg border bg-background transition-all hover:border-primary hover:bg-muted/50 w-full",
-        className
-      )}
-    >
-      <div 
-        onClick={() => setIsExpanded(!isExpanded)}
-        className="p-4 cursor-pointer"
+    <div className="relative rounded-xl transition-all duration-300 hover:scale-[1.01] hover:shadow-xl">
+      <GlowingEffect
+        spread={50}
+        glow={true}
+        disabled={false}
+        proximity={64}
+        inactiveZone={0.01}
+        borderWidth={4}
+      />
+      <div
+        className={cn(
+          "group/bento relative flex flex-col justify-between overflow-hidden rounded-xl border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-950",
+          className
+        )}
+        onClick={onClick}
+        {...props}
       >
-        <div className="relative z-10">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              {Icon && <Icon className="h-6 w-6" />}
-              {emoji && <span className="text-xl">{emoji}</span>}
-              <h3 className="text-lg font-semibold tracking-tight">{name}</h3>
-            </div>
-            <span className={cn(
-              "text-lg transition-transform",
-              isExpanded ? "rotate-180" : ""
-            )}>
-              ↓
-            </span>
+        <div>
+          <div className="mb-4 flex items-center gap-4">
+            <span className="text-2xl transition-transform duration-300 group-hover/bento:scale-110">{emoji}</span>
+            <h3 className="text-xl font-semibold text-neutral-800 dark:text-neutral-200">
+              {title}
+            </h3>
           </div>
-          <p className="mt-2 text-sm text-muted-foreground">{description}</p>
+          <p className="mb-4 text-sm text-neutral-600 dark:text-neutral-400">
+            {description}
+          </p>
+          <ul className="mb-4 space-y-2">
+            {features.map((feature, index) => (
+              <li
+                key={index}
+                className="flex items-center gap-2 text-sm text-neutral-600 dark:text-neutral-400 transition-all duration-300"
+                style={{ animationDelay: `${index * 50}ms` }}
+              >
+                <CheckIcon className="h-4 w-4 text-green-500" />
+                {feature}
+              </li>
+            ))}
+          </ul>
         </div>
-      </div>
-
-      <div className={cn(
-        "grid transition-all duration-200 ease-in-out",
-        isExpanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-      )}>
-        <div className="overflow-hidden">
-          <div className="p-4 pt-0 space-y-4">
-            {features && features.length > 0 && (
-              <div className="space-y-2">
-                <h4 className="font-medium">Key Features</h4>
-                <ul className="grid gap-1.5 text-sm">
-                  {features.map((feature) => (
-                    <li key={feature} className="flex items-center gap-2">
-                      <span className="text-primary">→</span>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            {offer && (
-              <div className="space-y-2">
-                <h4 className="font-medium">Special Offer</h4>
-                <p className="text-sm text-muted-foreground">{offer}</p>
-              </div>
-            )}
-            <div className="pt-2">
-              <Button variant="rainbow" size="sm" onClick={onClick} className="w-full">
-                Schedule Consultation <span className="ml-2">✨</span>
-              </Button>
-            </div>
-          </div>
+        <div className="flex items-center justify-end">
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-full text-xs py-1 transition-all duration-300 group-hover/bento:rainbow-animate group-hover/bento:text-white group-hover/bento:shadow-sm group-hover/bento:hover:shadow-lg group-hover/bento:hover:brightness-110 group-hover/bento:border-none animate-glow-pulse"
+          >
+            Schedule Consultation <span className="ml-1">✨</span>
+          </Button>
         </div>
       </div>
     </div>
