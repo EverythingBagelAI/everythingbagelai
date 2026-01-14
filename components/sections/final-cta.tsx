@@ -40,7 +40,7 @@ export function FinalCTA() {
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.6, delay: 0.35 }}
             >
-              Start with a free 30-minute consultation. No commitments, just clarity on what's
+              Start with a free 30-minute consultation. No commitments, just clarity on what&apos;s
               possible for your business.
             </motion.p>
 

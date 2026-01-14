@@ -121,17 +121,17 @@ export function BookingForm() {
             🎉
           </motion.div>
           <h2 className="text-3xl font-bold gradient-text">
-            You're All Set!
+            You&apos;re All Set!
           </h2>
           <p className="text-lg text-muted-foreground max-w-md mx-auto">
-            We'll review your information and reach out within 24 hours to schedule your consultation.
+            We&apos;ll review your information and reach out within 24 hours to schedule your consultation.
           </p>
           <div className="pt-4 space-y-2 text-sm text-muted-foreground">
             <p className="flex items-center justify-center gap-2">
               <span>✓</span> Check your email for confirmation
             </p>
             <p className="flex items-center justify-center gap-2">
-              <span>✓</span> We'll send calendar invite options
+              <span>✓</span> We&apos;ll send calendar invite options
             </p>
             <p className="flex items-center justify-center gap-2">
               <span>✓</span> Get ready to transform your business

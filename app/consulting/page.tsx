@@ -55,7 +55,7 @@ export default function BookingPage() {
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
               >
-                Let's Build Something
+                Let&apos;s Build Something
                 <span className="block gradient-text">Extraordinary</span>
               </motion.h1>
 
@@ -77,7 +77,7 @@ export default function BookingPage() {
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.6, delay: 0.5 }}
             >
-              {trustBadges.map((badge, index) => (
+              {trustBadges.map((badge) => (
                 <motion.div
                   key={badge.text}
                   className="flex items-center gap-2 p-3 rounded-xl bg-white/60 backdrop-blur-md border border-white/40 shadow-lg"
@@ -129,7 +129,7 @@ export default function BookingPage() {
               <div className="space-y-1 mb-4">
                 <h2 className="text-xl font-bold">Book Your Call</h2>
                 <p className="text-xs text-muted-foreground">
-                  Fill out the form below and we'll get back to you within 24 hours.
+                  Fill out the form below and we&apos;ll get back to you within 24 hours.
                 </p>
               </div>
               <BookingForm />
