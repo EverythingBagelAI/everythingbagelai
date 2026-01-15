@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
-import RecaptchaWrapper from "@/components/recaptcha-wrapper"
+import { useRecaptchaV3 } from "@/hooks/use-recaptcha-v3"
 import { Confetti, type ConfettiRef } from "@/components/ui/confetti"
 
 interface ConsultationFormProps {
@@ -46,9 +46,11 @@ const services = [
   }
 ]
 
-const RECAPTCHA_SITE_KEY = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
 
 export function ConsultationForm({ isOpen, onClose }: ConsultationFormProps) {
+  const { executeRecaptcha, isLoaded } = useRecaptchaV3(RECAPTCHA_SITE_KEY)
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -57,24 +59,30 @@ export function ConsultationForm({ isOpen, onClose }: ConsultationFormProps) {
     services: [] as string[],
     message: ""
   })
-  const [isVerified, setIsVerified] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const confettiRef = useRef<ConfettiRef>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
-    if (!isVerified) {
-      alert("Please complete the reCAPTCHA verification")
-      return
-    }
+
+    setIsSubmitting(true)
 
     try {
+      // Execute reCAPTCHA v3
+      const recaptchaToken = await executeRecaptcha('consultation_form_submit')
+
+      if (!recaptchaToken) {
+        alert("reCAPTCHA verification failed. Please try again.")
+        setIsSubmitting(false)
+        return
+      }
+
       // Here you would typically send the form data to your backend
-      console.log("Form submitted:", formData)
+      console.log("Form submitted:", formData, "reCAPTCHA token:", recaptchaToken)
       setShowSuccess(true)
       confettiRef.current?.fire()
-      
+
       // Close the form after showing success message
       setTimeout(() => {
         setShowSuccess(false)
@@ -83,11 +91,9 @@ export function ConsultationForm({ isOpen, onClose }: ConsultationFormProps) {
     } catch (error) {
       console.error("Error submitting form:", error)
       alert("There was an error submitting the form. Please try again.")
+    } finally {
+      setIsSubmitting(false)
     }
-  }
-
-  const handleRecaptchaChange = (token: string | null) => {
-    setIsVerified(!!token)
   }
 
   return (
@@ -240,10 +246,14 @@ export function ConsultationForm({ isOpen, onClose }: ConsultationFormProps) {
                       />
                     </div>
                     <div className="space-y-4">
-                      <RecaptchaWrapper sitekey={RECAPTCHA_SITE_KEY} onChange={handleRecaptchaChange} />
-                      <Button type="submit" variant="rainbow" className="w-full" disabled={!isVerified}>
-                        Schedule Consultation <span className="ml-2">✨</span>
+                      <Button type="submit" variant="rainbow" className="w-full" disabled={!isLoaded || isSubmitting}>
+                        {isSubmitting ? "Submitting..." : "Schedule Consultation"} <span className="ml-2">✨</span>
                       </Button>
+                      {!isLoaded && (
+                        <p className="text-xs text-center text-muted-foreground">
+                          Loading security verification...
+                        </p>
+                      )}
                     </div>
                   </form>
                   <div className="mt-6 pt-4 border-t text-center">

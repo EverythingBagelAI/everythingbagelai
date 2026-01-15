@@ -4,7 +4,7 @@ import { useState, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import RecaptchaWrapper from "@/components/recaptcha-wrapper"
+import { useRecaptchaV3 } from "@/hooks/use-recaptcha-v3"
 import { Confetti, type ConfettiRef } from "@/components/ui/confetti"
 import { motion } from "framer-motion"
 
@@ -38,6 +38,7 @@ const services = [
 
 export function BookingForm() {
   const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+  const { executeRecaptcha, isLoaded } = useRecaptchaV3(recaptchaSiteKey)
 
   const [formData, setFormData] = useState({
     name: "",
@@ -47,7 +48,6 @@ export function BookingForm() {
     services: [] as string[],
     message: ""
   })
-  const [isVerified, setIsVerified] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const confettiRef = useRef<ConfettiRef>(null)
@@ -55,14 +55,18 @@ export function BookingForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!isVerified) {
-      alert("Please complete the reCAPTCHA verification")
-      return
-    }
-
     setIsSubmitting(true)
 
     try {
+      // Execute reCAPTCHA v3
+      const recaptchaToken = await executeRecaptcha('booking_form_submit')
+
+      if (!recaptchaToken) {
+        alert("reCAPTCHA verification failed. Please try again.")
+        setIsSubmitting(false)
+        return
+      }
+
       // Get the webhook URL from environment variable
       const webhookUrl = process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL
 
@@ -80,6 +84,7 @@ export function BookingForm() {
             company: formData.company,
             services: formData.services,
             message: formData.message,
+            recaptchaToken: recaptchaToken,
             submittedAt: new Date().toISOString(),
           }),
         })
@@ -97,10 +102,6 @@ export function BookingForm() {
     } finally {
       setIsSubmitting(false)
     }
-  }
-
-  const handleRecaptchaChange = (token: string | null) => {
-    setIsVerified(!!token)
   }
 
   if (showSuccess) {
@@ -250,17 +251,21 @@ export function BookingForm() {
       </div>
 
       <div className="space-y-3">
-        <RecaptchaWrapper sitekey={recaptchaSiteKey} onChange={handleRecaptchaChange} />
         <Button
           type="submit"
           variant="rainbow"
           size="default"
           className="w-full text-sm py-5"
-          disabled={!isVerified || isSubmitting}
+          disabled={!isLoaded || isSubmitting}
         >
           {isSubmitting ? "Submitting..." : "Book Your Free Consultation"}
           {!isSubmitting && <span className="ml-2">→</span>}
         </Button>
+        {!isLoaded && (
+          <p className="text-xs text-center text-muted-foreground">
+            Loading security verification...
+          </p>
+        )}
       </div>
 
       <p className="text-[10px] text-center text-muted-foreground">
