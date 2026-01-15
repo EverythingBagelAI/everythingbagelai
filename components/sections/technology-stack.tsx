@@ -110,6 +110,7 @@ export function TechnologyStack() {
                           width={32}
                           height={32}
                           className="object-contain"
+                          unoptimized
                         />
                       </div>
                       <span className="font-medium">{item.name}</span>

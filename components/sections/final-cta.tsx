@@ -54,7 +54,7 @@ export function FinalCTA() {
                 asChild
                 variant="rainbow"
                 size="lg"
-                className="text-sm sm:text-base lg:text-lg px-4 py-4 sm:px-6 sm:py-5 lg:px-8 lg:py-6 hover:scale-105 transition-transform animate-glow-pulse w-full sm:w-auto"
+                className="text-xs sm:text-sm lg:text-base px-4 py-4 sm:px-6 sm:py-5 lg:px-8 lg:py-6 hover:scale-105 transition-transform animate-glow-pulse w-full sm:w-auto"
               >
                 <Link href="/consulting">
                   Book Your Free Consultation

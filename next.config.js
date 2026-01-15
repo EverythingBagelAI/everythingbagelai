@@ -8,8 +8,8 @@ const nextConfig = {
       },
     ],
     dangerouslyAllowSVG: true,
-    contentDispositionType: 'attachment',
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    contentDispositionType: 'inline',
+    contentSecurityPolicy: "default-src 'self'; img-src https: data:; script-src 'none'; sandbox;",
   },
 }
 
