@@ -27,7 +27,7 @@ export function FinalCTA() {
           {/* Content */}
           <div className="relative px-8 py-16 md:px-16 md:py-20 text-center">
             <motion.h2
-              className="text-4xl lg:text-6xl font-bold mb-6"
+              className="text-3xl sm:text-4xl lg:text-6xl font-bold mb-4 sm:mb-6"
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -35,7 +35,7 @@ export function FinalCTA() {
               Ready to Scale with <span className="gradient-text">AI</span>?
             </motion.h2>
             <motion.p
-              className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto"
+              className="text-base sm:text-lg lg:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto"
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.6, delay: 0.35 }}
@@ -54,7 +54,7 @@ export function FinalCTA() {
                 asChild
                 variant="rainbow"
                 size="lg"
-                className="text-lg px-8 py-6 hover:scale-105 transition-transform animate-glow-pulse"
+                className="text-sm sm:text-base lg:text-lg px-4 py-4 sm:px-6 sm:py-5 lg:px-8 lg:py-6 hover:scale-105 transition-transform animate-glow-pulse w-full sm:w-auto"
               >
                 <Link href="/consulting">
                   Book Your Free Consultation

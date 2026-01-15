@@ -380,6 +380,15 @@
   scroll-snap-stop: always;
 }
 
+/* Disable scroll snap for specific pages */
+.no-scroll-snap {
+  scroll-snap-type: none !important;
+}
+
+.no-scroll-snap ~ * {
+  scroll-snap-align: none !important;
+}
+
 @theme inline {
   @keyframes aurora {
   0% {
