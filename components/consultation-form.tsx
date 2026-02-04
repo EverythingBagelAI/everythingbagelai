@@ -46,7 +46,7 @@ const services = [
   }
 ]
 
-const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""
 
 export function ConsultationForm({ isOpen, onClose }: ConsultationFormProps) {
   const { executeRecaptcha, isLoaded } = useRecaptchaV3(RECAPTCHA_SITE_KEY)
@@ -78,10 +78,36 @@ export function ConsultationForm({ isOpen, onClose }: ConsultationFormProps) {
         return
       }
 
-      // Here you would typically send the form data to your backend
-      console.log("Form submitted:", formData, "reCAPTCHA token:", recaptchaToken)
+      // Submit to our API
+      const response = await fetch('/api/consultation', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          recaptchaToken,
+        }),
+      })
+
+      const result = await response.json()
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Submission failed')
+      }
+
       setShowSuccess(true)
       confettiRef.current?.fire()
+
+      // Reset form data
+      setFormData({
+        name: "",
+        email: "",
+        mobile: "",
+        company: "",
+        services: [],
+        message: ""
+      })
 
       // Close the form after showing success message
       setTimeout(() => {
@@ -90,7 +116,7 @@ export function ConsultationForm({ isOpen, onClose }: ConsultationFormProps) {
       }, 5000) // Show success message for 5 seconds
     } catch (error) {
       console.error("Error submitting form:", error)
-      alert("There was an error submitting the form. Please try again.")
+      alert(error instanceof Error ? error.message : "There was an error submitting the form. Please try again.")
     } finally {
       setIsSubmitting(false)
     }

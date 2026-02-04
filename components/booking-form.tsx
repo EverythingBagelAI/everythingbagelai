@@ -37,7 +37,7 @@ const services = [
 ]
 
 export function BookingForm() {
-  const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+  const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""
   const { executeRecaptcha, isLoaded } = useRecaptchaV3(recaptchaSiteKey)
 
   const [formData, setFormData] = useState({
