@@ -11,7 +11,7 @@ interface ConsultationFormData {
   company: string;
   services: string[];
   message: string;
-  recaptchaToken: string;
+  _hp?: string; // Honeypot field
 }
 
 async function verifyRecaptcha(token: string): Promise<{ success: boolean; score?: number; error?: string }> {
@@ -79,7 +79,13 @@ export async function POST(request: Request) {
   try {
     const body: ConsultationFormData = await request.json();
     
-    const { name, email, mobile, company, services, message, recaptchaToken } = body;
+    const { name, email, mobile, company, services, message, _hp } = body;
+
+    // Honeypot check - if filled, it's a bot (silently succeed)
+    if (_hp) {
+      console.log('Honeypot triggered - likely bot submission');
+      return NextResponse.json({ success: true });
+    }
 
     // Validate required fields
     if (!name || !email || !mobile || !company) {
@@ -88,26 +94,6 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-
-    if (!recaptchaToken) {
-      return NextResponse.json(
-        { error: 'reCAPTCHA token missing' },
-        { status: 400 }
-      );
-    }
-
-    // Verify reCAPTCHA
-    const recaptchaResult = await verifyRecaptcha(recaptchaToken);
-    
-    if (!recaptchaResult.success) {
-      console.warn('reCAPTCHA verification failed:', recaptchaResult.error);
-      return NextResponse.json(
-        { error: 'reCAPTCHA verification failed. Please try again.' },
-        { status: 400 }
-      );
-    }
-    
-    const recaptchaScore = recaptchaResult.score;
 
     // Forward to n8n webhook
     if (!N8N_WEBHOOK_URL) {
@@ -126,7 +112,6 @@ export async function POST(request: Request) {
       services,
       message,
       submittedAt: new Date().toISOString(),
-      recaptchaScore: recaptchaScore,
     };
 
     const webhookResponse = await fetch(N8N_WEBHOOK_URL, {

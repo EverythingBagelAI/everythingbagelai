@@ -4,7 +4,7 @@ import { useState, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { useRecaptchaV3 } from "@/hooks/use-recaptcha-v3"
+// Honeypot used instead of reCAPTCHA for spam protection
 import { Confetti, type ConfettiRef } from "@/components/ui/confetti"
 import { motion } from "framer-motion"
 
@@ -37,8 +37,9 @@ const services = [
 ]
 
 export function BookingForm() {
-  const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""
-  const { executeRecaptcha, isLoaded } = useRecaptchaV3(recaptchaSiteKey)
+  // Honeypot field for spam protection (bots fill this in, humans don't see it)
+  const [honeypot, setHoneypot] = useState("")
+  const isLoaded = true // No external service needed
 
   const [formData, setFormData] = useState({
     name: "",
@@ -58,16 +59,15 @@ export function BookingForm() {
     setIsSubmitting(true)
 
     try {
-      // Execute reCAPTCHA Enterprise
-      const recaptchaToken = await executeRecaptcha('booking_form_submit')
-
-      if (!recaptchaToken) {
-        alert("reCAPTCHA verification failed. Please try again.")
-        setIsSubmitting(false)
+      // Honeypot check - if filled, it's a bot
+      if (honeypot) {
+        // Silently "succeed" so bots think it worked
+        setShowSuccess(true)
+        confettiRef.current?.fire()
         return
       }
 
-      // Submit to API (which verifies reCAPTCHA and forwards to n8n)
+      // Submit to API
       const response = await fetch('/api/consultation', {
         method: 'POST',
         headers: {
@@ -75,7 +75,7 @@ export function BookingForm() {
         },
         body: JSON.stringify({
           ...formData,
-          recaptchaToken,
+          _hp: honeypot, // Send honeypot for server-side check too
         }),
       })
 
@@ -262,6 +262,25 @@ export function BookingForm() {
       <p className="text-[9px] sm:text-[10px] text-center text-muted-foreground">
         By submitting this form, you agree to receive communication from EverythingBagel AI.
       </p>
+      
+      {/* Honeypot field - hidden from humans, bots will fill it */}
+      <input
+        type="text"
+        name="website"
+        value={honeypot}
+        onChange={(e) => setHoneypot(e.target.value)}
+        autoComplete="off"
+        tabIndex={-1}
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          left: '-9999px',
+          top: '-9999px',
+          opacity: 0,
+          height: 0,
+          width: 0,
+        }}
+      />
     </form>
   )
 }
