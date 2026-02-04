@@ -67,31 +67,22 @@ export function BookingForm() {
         return
       }
 
-      // Get the webhook URL from environment variable
-      const webhookUrl = process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL
+      // Submit to our API (which verifies reCAPTCHA and forwards to n8n)
+      const response = await fetch('/api/consultation', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          recaptchaToken,
+        }),
+      })
 
-      if (webhookUrl) {
-        // Send form data to n8n webhook
-        const response = await fetch(webhookUrl, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: formData.name,
-            email: formData.email,
-            mobile: formData.mobile,
-            company: formData.company,
-            services: formData.services,
-            message: formData.message,
-            recaptchaToken: recaptchaToken,
-            submittedAt: new Date().toISOString(),
-          }),
-        })
+      const result = await response.json()
 
-        if (!response.ok) {
-          throw new Error("Failed to submit form")
-        }
+      if (!response.ok) {
+        throw new Error(result.error || 'Submission failed')
       }
 
       setShowSuccess(true)
