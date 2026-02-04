@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 
-const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
+const GOOGLE_CLOUD_API_KEY = process.env.GOOGLE_CLOUD_API_KEY;
+const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 const N8N_WEBHOOK_URL = process.env.N8N_WEBHOOK_URL || process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL;
 
 interface ConsultationFormData {
@@ -14,21 +15,21 @@ interface ConsultationFormData {
 }
 
 async function verifyRecaptcha(token: string): Promise<{ success: boolean; score?: number; error?: string }> {
-  if (!RECAPTCHA_SECRET_KEY) {
-    console.error('RECAPTCHA_SECRET_KEY not configured - env vars:', {
-      hasSecret: !!process.env.RECAPTCHA_SECRET_KEY,
-      hasSiteKey: !!process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
-    });
+  if (!GOOGLE_CLOUD_API_KEY) {
+    console.error('GOOGLE_CLOUD_API_KEY not configured');
     return { success: false, error: 'reCAPTCHA not configured on server' };
   }
 
-  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+  if (!RECAPTCHA_SITE_KEY) {
+    console.error('NEXT_PUBLIC_RECAPTCHA_SITE_KEY not configured');
+    return { success: false, error: 'reCAPTCHA site key not configured' };
+  }
 
   try {
     // Use reCAPTCHA Enterprise API
     const projectId = process.env.GOOGLE_CLOUD_PROJECT || 'everythingbagelai';
     const response = await fetch(
-      `https://recaptchaenterprise.googleapis.com/v1/projects/${projectId}/assessments?key=${RECAPTCHA_SECRET_KEY}`,
+      `https://recaptchaenterprise.googleapis.com/v1/projects/${projectId}/assessments?key=${GOOGLE_CLOUD_API_KEY}`,
       {
         method: 'POST',
         headers: {
@@ -37,7 +38,7 @@ async function verifyRecaptcha(token: string): Promise<{ success: boolean; score
         body: JSON.stringify({
           event: {
             token: token,
-            siteKey: siteKey,
+            siteKey: RECAPTCHA_SITE_KEY,
             expectedAction: 'booking_form_submit',
           },
         }),
@@ -88,20 +89,25 @@ export async function POST(request: Request) {
       );
     }
 
-    // reCAPTCHA temporarily disabled - skip verification
-    let recaptchaScore: number | undefined;
-    if (recaptchaToken && recaptchaToken !== 'disabled') {
-      const recaptchaResult = await verifyRecaptcha(recaptchaToken);
-      
-      if (!recaptchaResult.success) {
-        console.warn('reCAPTCHA verification failed:', recaptchaResult.error);
-        return NextResponse.json(
-          { error: 'reCAPTCHA verification failed. Please try again.' },
-          { status: 400 }
-        );
-      }
-      recaptchaScore = recaptchaResult.score;
+    if (!recaptchaToken) {
+      return NextResponse.json(
+        { error: 'reCAPTCHA token missing' },
+        { status: 400 }
+      );
     }
+
+    // Verify reCAPTCHA
+    const recaptchaResult = await verifyRecaptcha(recaptchaToken);
+    
+    if (!recaptchaResult.success) {
+      console.warn('reCAPTCHA verification failed:', recaptchaResult.error);
+      return NextResponse.json(
+        { error: 'reCAPTCHA verification failed. Please try again.' },
+        { status: 400 }
+      );
+    }
+    
+    const recaptchaScore = recaptchaResult.score;
 
     // Forward to n8n webhook
     if (!N8N_WEBHOOK_URL) {
