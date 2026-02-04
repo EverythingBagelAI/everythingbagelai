@@ -88,22 +88,19 @@ export async function POST(request: Request) {
       );
     }
 
-    if (!recaptchaToken) {
-      return NextResponse.json(
-        { error: 'reCAPTCHA token missing' },
-        { status: 400 }
-      );
-    }
-
-    // Verify reCAPTCHA
-    const recaptchaResult = await verifyRecaptcha(recaptchaToken);
-    
-    if (!recaptchaResult.success) {
-      console.warn('reCAPTCHA verification failed:', recaptchaResult.error);
-      return NextResponse.json(
-        { error: 'reCAPTCHA verification failed. Please try again.' },
-        { status: 400 }
-      );
+    // reCAPTCHA temporarily disabled - skip verification
+    let recaptchaScore: number | undefined;
+    if (recaptchaToken && recaptchaToken !== 'disabled') {
+      const recaptchaResult = await verifyRecaptcha(recaptchaToken);
+      
+      if (!recaptchaResult.success) {
+        console.warn('reCAPTCHA verification failed:', recaptchaResult.error);
+        return NextResponse.json(
+          { error: 'reCAPTCHA verification failed. Please try again.' },
+          { status: 400 }
+        );
+      }
+      recaptchaScore = recaptchaResult.score;
     }
 
     // Forward to n8n webhook
@@ -123,7 +120,7 @@ export async function POST(request: Request) {
       services,
       message,
       submittedAt: new Date().toISOString(),
-      recaptchaScore: recaptchaResult.score,
+      recaptchaScore: recaptchaScore,
     };
 
     const webhookResponse = await fetch(N8N_WEBHOOK_URL, {

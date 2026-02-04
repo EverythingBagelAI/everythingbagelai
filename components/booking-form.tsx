@@ -37,8 +37,10 @@ const services = [
 ]
 
 export function BookingForm() {
-  const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""
-  const { executeRecaptcha, isLoaded } = useRecaptchaV3(recaptchaSiteKey)
+  // reCAPTCHA temporarily disabled - Google Cloud Enterprise key needs setup
+  // const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""
+  // const { executeRecaptcha, isLoaded } = useRecaptchaV3(recaptchaSiteKey)
+  const isLoaded = true
 
   const [formData, setFormData] = useState({
     name: "",
@@ -58,16 +60,7 @@ export function BookingForm() {
     setIsSubmitting(true)
 
     try {
-      // Execute reCAPTCHA v3
-      const recaptchaToken = await executeRecaptcha('booking_form_submit')
-
-      if (!recaptchaToken) {
-        alert("reCAPTCHA verification failed. Please try again.")
-        setIsSubmitting(false)
-        return
-      }
-
-      // Submit to our API (which verifies reCAPTCHA and forwards to n8n)
+      // reCAPTCHA temporarily disabled - submit directly to API
       const response = await fetch('/api/consultation', {
         method: 'POST',
         headers: {
@@ -75,7 +68,7 @@ export function BookingForm() {
         },
         body: JSON.stringify({
           ...formData,
-          recaptchaToken,
+          recaptchaToken: 'disabled',
         }),
       })
 
