@@ -22,35 +22,52 @@ async function verifyRecaptcha(token: string): Promise<{ success: boolean; score
     return { success: false, error: 'reCAPTCHA not configured on server' };
   }
 
+  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+
   try {
-    const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        secret: RECAPTCHA_SECRET_KEY,
-        response: token,
-      }),
-    });
+    // Use reCAPTCHA Enterprise API
+    const projectId = process.env.GOOGLE_CLOUD_PROJECT || 'everythingbagelai';
+    const response = await fetch(
+      `https://recaptchaenterprise.googleapis.com/v1/projects/${projectId}/assessments?key=${RECAPTCHA_SECRET_KEY}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          event: {
+            token: token,
+            siteKey: siteKey,
+            expectedAction: 'booking_form_submit',
+          },
+        }),
+      }
+    );
 
     const data = await response.json();
-    console.log('reCAPTCHA response:', JSON.stringify(data));
+    console.log('reCAPTCHA Enterprise response:', JSON.stringify(data));
     
-    if (!data.success) {
-      const errorMsg = data['error-codes']?.join(', ') || 'Verification failed';
-      console.error('reCAPTCHA failed:', errorMsg);
-      return { success: false, error: errorMsg };
+    if (data.error) {
+      console.error('reCAPTCHA Enterprise error:', data.error.message);
+      return { success: false, error: data.error.message };
     }
 
-    // reCAPTCHA v3 returns a score (0.0 - 1.0), higher is more likely human
+    if (!data.tokenProperties?.valid) {
+      const reason = data.tokenProperties?.invalidReason || 'Invalid token';
+      console.error('reCAPTCHA token invalid:', reason);
+      return { success: false, error: reason };
+    }
+
+    const score = data.riskAnalysis?.score;
+    
+    // Score is 0.0 - 1.0, higher is more likely human
     // 0.5 is a reasonable threshold
-    if (data.score !== undefined && data.score < 0.5) {
-      console.warn('reCAPTCHA score too low:', data.score);
-      return { success: false, score: data.score, error: 'Score too low' };
+    if (score !== undefined && score < 0.5) {
+      console.warn('reCAPTCHA score too low:', score);
+      return { success: false, score, error: 'Score too low' };
     }
 
-    return { success: true, score: data.score };
+    return { success: true, score };
   } catch (error) {
     console.error('reCAPTCHA verification error:', error);
     return { success: false, error: 'Verification request failed' };
