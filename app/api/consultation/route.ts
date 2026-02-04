@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
-const N8N_WEBHOOK_URL = process.env.N8N_WEBHOOK_URL || 'https://everythingbagelai.app.n8n.cloud/webhook/form-submission';
+const N8N_WEBHOOK_URL = process.env.N8N_WEBHOOK_URL;
 
 interface ConsultationFormData {
   name: string;
@@ -83,6 +83,14 @@ export async function POST(request: Request) {
     }
 
     // Forward to n8n webhook
+    if (!N8N_WEBHOOK_URL) {
+      console.error('N8N_WEBHOOK_URL not configured');
+      return NextResponse.json(
+        { error: 'Form submission not configured' },
+        { status: 500 }
+      );
+    }
+
     const webhookPayload = {
       name,
       email,
