@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
-const N8N_WEBHOOK_URL = process.env.N8N_WEBHOOK_URL;
+const N8N_WEBHOOK_URL = process.env.N8N_WEBHOOK_URL || process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL;
 
 interface ConsultationFormData {
   name: string;
@@ -15,8 +15,11 @@ interface ConsultationFormData {
 
 async function verifyRecaptcha(token: string): Promise<{ success: boolean; score?: number; error?: string }> {
   if (!RECAPTCHA_SECRET_KEY) {
-    console.error('RECAPTCHA_SECRET_KEY not configured');
-    return { success: false, error: 'reCAPTCHA not configured' };
+    console.error('RECAPTCHA_SECRET_KEY not configured - env vars:', {
+      hasSecret: !!process.env.RECAPTCHA_SECRET_KEY,
+      hasSiteKey: !!process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
+    });
+    return { success: false, error: 'reCAPTCHA not configured on server' };
   }
 
   try {
@@ -32,14 +35,18 @@ async function verifyRecaptcha(token: string): Promise<{ success: boolean; score
     });
 
     const data = await response.json();
+    console.log('reCAPTCHA response:', JSON.stringify(data));
     
     if (!data.success) {
-      return { success: false, error: data['error-codes']?.join(', ') || 'Verification failed' };
+      const errorMsg = data['error-codes']?.join(', ') || 'Verification failed';
+      console.error('reCAPTCHA failed:', errorMsg);
+      return { success: false, error: errorMsg };
     }
 
     // reCAPTCHA v3 returns a score (0.0 - 1.0), higher is more likely human
     // 0.5 is a reasonable threshold
     if (data.score !== undefined && data.score < 0.5) {
+      console.warn('reCAPTCHA score too low:', data.score);
       return { success: false, score: data.score, error: 'Score too low' };
     }
 
